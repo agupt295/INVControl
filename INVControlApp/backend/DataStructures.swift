@@ -2,10 +2,10 @@ import SwiftUI
 
 @MainActor
 final class SignInEmailViewModel: ObservableObject {
-    func signIn(email: String, password: String, username: String, warehouseLocation: String) async -> Bool{
+    func signIn(email: String, password: String, username: String/*, warehouseLocation: String*/) async -> Bool{
         do{
             let returedUserData = try await AuthenticationManager.shared.createuser(email: email, password: password)
-            let userInfo = DBUser(userId: returedUserData.uid, email: email, username: username, password: password, itemList: [], productList: [], warehouseLocation: warehouseLocation)
+            let userInfo = DBUser(userId: returedUserData.uid, email: email, username: username, password: password, itemList: [], productList: []/*, warehouseLocation: warehouseLocation*/)
             try await UserManager.shared.createNewUser(user: userInfo)
             
             return true

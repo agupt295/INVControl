@@ -9,8 +9,8 @@ struct SignupView: View {
     @State var password: String=""
     @State var confirmPassword: String=""
     @State var isRegistrationSuccessful: Bool = false
-    @State var warehouseLoc: String = ""
-    @State private var selectedState = "Warehouse Location"
+//    @State var warehouseLoc: String = ""
+//    @State private var selectedState = "Warehouse Location"
     
     var body: some View {
         VStack (spacing: 20){
@@ -18,19 +18,19 @@ struct SignupView: View {
             TextField("Email", text: $email) .padding()
             TextField("User Name", text: $userName) .padding()
 
-             HStack {
-                Text("WareHouse Location")
-                
-                Picker(selection: $selectedState, label: Text("")) {
-                    ForEach(states, id: \.self) { state in
-                        Text(state).tag(state)
-                    }
-                }
-                .pickerStyle(.menu)
-                .onChange(of: selectedState) { newValue in
-                    warehouseLoc = newValue
-                }
-            }
+//             HStack {
+//                Text("WareHouse Location")
+//                
+//                Picker(selection: $selectedState, label: Text("")) {
+//                    ForEach(states, id: \.self) { state in
+//                        Text(state).tag(state)
+//                    }
+//                }
+//                .pickerStyle(.menu)
+//                .onChange(of: selectedState) { newValue in
+//                    warehouseLoc = newValue
+//                }
+//            }
             .padding()
 
             TextField("Password", text: $password) .padding()
@@ -50,7 +50,7 @@ struct SignupView: View {
                     Button("Create Account") {
                         Task {
                             if(email != "" && password == confirmPassword){
-                                if(await viewModel.signIn(email: email, password: password, username: userName, warehouseLocation: selectedState)){
+                                if(await viewModel.signIn(email: email, password: password, username: userName/*, warehouseLocation: selectedState*/)){
                                     // successful Login
                                     isRegistrationSuccessful = true
                                 } else {
