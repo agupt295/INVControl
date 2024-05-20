@@ -13,8 +13,6 @@ struct AddItemView: View {
     @State private var itemsfromDB:[Item] = []
     
     var body: some View {
-        // @ObservedObject var arrayOfItems: [Item] = []
-        // @ObservedObject var sharedItemsData = ItemsArraySharedData(/*itemList: []*/)
         if isLoading {
             VStack{
                 Text("Loading...")
@@ -22,9 +20,7 @@ struct AddItemView: View {
             }
             .onAppear {
                 Task {
-                    // let user = try await profileViewModel.loadCurrentUser()
                     await loadCurrentUser()
-                    // sharedItemsData.itemList = user.itemList
                     itemsfromDB = user!.itemList
                     isLoading = false
                 }
@@ -41,7 +37,6 @@ struct AddItemView: View {
                                 Spacer()
                             }
                         }
-                        // .onDelete(perform: deleteItem)
                     }
                     .navigationTitle("Items List")
                     .id(UUID())
@@ -57,7 +52,6 @@ struct AddItemView: View {
                         
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(action: {
-//                                isProfileSheetPresented.toggle()
                                 UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: WebAPIView())
                             }) {
                                 Image(systemName: "web.camera.fill")
@@ -107,7 +101,6 @@ struct AddItemView: View {
                 }
             }
             .task{
-                // user = try? await profileViewModel.loadCurrentUser()
                 await loadCurrentUser()
             }
         }
@@ -133,7 +126,7 @@ struct AddItemView: View {
     }
     
     func deleteItem(at offsets: IndexSet) {
-        // tems.remove(atOffsets: offsets)
+        
     }
     
     func loadCurrentUser() async {

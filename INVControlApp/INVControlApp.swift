@@ -8,7 +8,7 @@ struct INVControlApp: App {
     
     var body: some Scene {
         WindowGroup {
-            UserDataEntry()
+            HomePageView()
         }
     }
 }

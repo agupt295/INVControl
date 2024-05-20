@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E04834A82B02CAEE0047C39F /* Css.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04834A72B02CAEE0047C39F /* Css.swift */; };
-		E04834AA2B02D3300047C39F /* UserDataEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04834A92B02D3300047C39F /* UserDataEntry.swift */; };
+		E04834AA2B02D3300047C39F /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04834A92B02D3300047C39F /* HomePageView.swift */; };
 		E04834AC2B02E6660047C39F /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04834AB2B02E6660047C39F /* HomePage.swift */; };
 		E0769AFC2AE6DF2600B08067 /* INVControlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0769AFB2AE6DF2600B08067 /* INVControlApp.swift */; };
 		E0769AFE2AE6DF2600B08067 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0769AFD2AE6DF2600B08067 /* LoginView.swift */; };
@@ -60,7 +60,7 @@
 
 /* Begin PBXFileReference section */
 		E04834A72B02CAEE0047C39F /* Css.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Css.swift; sourceTree = "<group>"; };
-		E04834A92B02D3300047C39F /* UserDataEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataEntry.swift; sourceTree = "<group>"; };
+		E04834A92B02D3300047C39F /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		E04834AB2B02E6660047C39F /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		E0769AF82AE6DF2600B08067 /* INVControlApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = INVControlApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0769AFB2AE6DF2600B08067 /* INVControlApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INVControlApp.swift; sourceTree = "<group>"; };
@@ -150,7 +150,7 @@
 				F078A31C2B077E4A00E6F258 /* ordering */,
 				F078A3192B077C6500E6F258 /* checkStatus */,
 				F078A3142B07701700E6F258 /* addingItemsOrOrders */,
-				F078A3132B076FD400E6F258 /* userEntry */,
+				F078A3132B076FD400E6F258 /* User_Authentication */,
 				E0769AFB2AE6DF2600B08067 /* INVControlApp.swift */,
 				E04834AB2B02E6660047C39F /* HomePage.swift */,
 				E04834A72B02CAEE0047C39F /* Css.swift */,
@@ -230,14 +230,14 @@
 			path = help;
 			sourceTree = "<group>";
 		};
-		F078A3132B076FD400E6F258 /* userEntry */ = {
+		F078A3132B076FD400E6F258 /* User_Authentication */ = {
 			isa = PBXGroup;
 			children = (
 				E0769AFD2AE6DF2600B08067 /* LoginView.swift */,
 				E0769B092AE74A2900B08067 /* SignupView.swift */,
-				E04834A92B02D3300047C39F /* UserDataEntry.swift */,
+				E04834A92B02D3300047C39F /* HomePageView.swift */,
 			);
-			path = userEntry;
+			path = User_Authentication;
 			sourceTree = "<group>";
 		};
 		F078A3142B07701700E6F258 /* addingItemsOrOrders */ = {
@@ -391,7 +391,7 @@
 				F03028672B0F0CBC00997B67 /* WebAPIView.swift in Sources */,
 				E0769AFE2AE6DF2600B08067 /* LoginView.swift in Sources */,
 				F078A3182B0773F400E6F258 /* AddOrderView.swift in Sources */,
-				E04834AA2B02D3300047C39F /* UserDataEntry.swift in Sources */,
+				E04834AA2B02D3300047C39F /* HomePageView.swift in Sources */,
 				F03028642B0F01A900997B67 /* MapView.swift in Sources */,
 				F0061CE02B098F990039D51C /* ProfileView.swift in Sources */,
 				E0769AFC2AE6DF2600B08067 /* INVControlApp.swift in Sources */,

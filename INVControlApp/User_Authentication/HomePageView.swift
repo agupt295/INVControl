@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct UserDataEntry: View {
+struct HomePageView: View {
     var body: some View {
         NavigationView {
             VStack {
@@ -57,6 +57,6 @@ struct Signup: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        UserDataEntry()
+        HomePageView()
     }
 }

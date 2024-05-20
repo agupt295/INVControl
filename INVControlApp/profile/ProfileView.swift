@@ -73,7 +73,7 @@ struct ProfileView: View {
                     Task {
                         do {
                             try await AuthenticationManager.shared.logOut()
-                            UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: UserDataEntry())
+                            UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: HomePageView())
                         } catch {
                             print(error)
                         }
