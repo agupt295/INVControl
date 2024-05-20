@@ -31,10 +31,10 @@ struct DBUser: Codable {
     let password: String?
     var itemList: [Item]
     var productList: [Product]
-    var warehouseLocation: String?
+//    var warehouseLocation: String?
 }
 
-let states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa"]
+//let states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa"]
 
 
 final class UserManager: ObservableObject {

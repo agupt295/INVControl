@@ -50,14 +50,6 @@ struct AddItemView: View {
                             }
                         }
                         
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button(action: {
-                                UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: WebAPIView())
-                            }) {
-                                Image(systemName: "web.camera.fill")
-                            }
-                        }
-                        
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
                                 isAddItemSheetPresented.toggle()

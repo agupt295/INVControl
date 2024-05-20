@@ -46,14 +46,7 @@ struct ProfileView: View {
                 }
             }
             
-            Section(header: Text("Warehouse Location").foregroundColor(.red)){
-                
-                if let user = viewModel.user {
-                    if let location = user.warehouseLocation {
-                        MapView(wareHouseLocation: location) .frame(width: 300, height: 300)
-                    }
-                }
-                
+            Section(header: Text(" ").foregroundColor(.red)){
                 Button("Logout") {
                     Task {
                         do {
