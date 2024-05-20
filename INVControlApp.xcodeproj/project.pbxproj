@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E04834A82B02CAEE0047C39F /* Css.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04834A72B02CAEE0047C39F /* Css.swift */; };
 		E04834AA2B02D3300047C39F /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04834A92B02D3300047C39F /* HomePageView.swift */; };
 		E04834AC2B02E6660047C39F /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04834AB2B02E6660047C39F /* HomePage.swift */; };
 		E0769AFC2AE6DF2600B08067 /* INVControlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0769AFB2AE6DF2600B08067 /* INVControlApp.swift */; };
@@ -45,8 +44,6 @@
 		F0061D172B09B73B0039D51C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F0061D162B09B73B0039D51C /* FirebaseStorage */; };
 		F0061D192B09B73B0039D51C /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = F0061D182B09B73B0039D51C /* FirebaseStorageCombine-Community */; };
 		F0061D1B2B09C13D0039D51C /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0061D1A2B09C13D0039D51C /* AuthenticationManager.swift */; };
-		F03028632B0F01A900997B67 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03028602B0F01A900997B67 /* MapViewModel.swift */; };
-		F03028642B0F01A900997B67 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03028622B0F01A900997B67 /* MapView.swift */; };
 		F062B4AD2B087BB4002330B3 /* DataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = F062B4AC2B087BB4002330B3 /* DataStructures.swift */; };
 		F062B4B12B08CA7D002330B3 /* Trash.swift in Sources */ = {isa = PBXBuildFile; fileRef = F062B4B02B08CA7D002330B3 /* Trash.swift */; };
 		F062B4B42B095E29002330B3 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F062B4B32B095E29002330B3 /* HelpView.swift */; };
@@ -58,7 +55,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E04834A72B02CAEE0047C39F /* Css.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Css.swift; sourceTree = "<group>"; };
 		E04834A92B02D3300047C39F /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		E04834AB2B02E6660047C39F /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		E0769AF82AE6DF2600B08067 /* INVControlApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = INVControlApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,8 +66,6 @@
 		F0061CDF2B098F990039D51C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		F0061CE12B09B5810039D51C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F0061D1A2B09C13D0039D51C /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
-		F03028602B0F01A900997B67 /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		F03028622B0F01A900997B67 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		F062B4AC2B087BB4002330B3 /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
 		F062B4B02B08CA7D002330B3 /* Trash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trash.swift; sourceTree = "<group>"; };
 		F062B4B32B095E29002330B3 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
@@ -150,7 +144,6 @@
 				F078A3132B076FD400E6F258 /* User_Authentication */,
 				E0769AFB2AE6DF2600B08067 /* INVControlApp.swift */,
 				E04834AB2B02E6660047C39F /* HomePage.swift */,
-				E04834A72B02CAEE0047C39F /* Css.swift */,
 				F0061CE12B09B5810039D51C /* GoogleService-Info.plist */,
 				E0769AFF2AE6DF2700B08067 /* Assets.xcassets */,
 				E0769B012AE6DF2700B08067 /* Preview Content */,
@@ -170,35 +163,9 @@
 		F0061CDE2B098F8C0039D51C /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				F030285E2B0F01A900997B67 /* Map */,
 				F0061CDF2B098F990039D51C /* ProfileView.swift */,
 			);
 			path = profile;
-			sourceTree = "<group>";
-		};
-		F030285E2B0F01A900997B67 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				F030285F2B0F01A900997B67 /* ViewModel */,
-				F03028612B0F01A900997B67 /* View */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
-		F030285F2B0F01A900997B67 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				F03028602B0F01A900997B67 /* MapViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		F03028612B0F01A900997B67 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				F03028622B0F01A900997B67 /* MapView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		F062B4AB2B087B83002330B3 /* backend */ = {
@@ -373,14 +340,11 @@
 				E04834AC2B02E6660047C39F /* HomePage.swift in Sources */,
 				F09B5EAF2B0C0139009392B5 /* UserManager.swift in Sources */,
 				F078A3162B07702E00E6F258 /* AddItemView.swift in Sources */,
-				E04834A82B02CAEE0047C39F /* Css.swift in Sources */,
-				F03028632B0F01A900997B67 /* MapViewModel.swift in Sources */,
 				F078A31B2B077C8E00E6F258 /* InvStatus.swift in Sources */,
 				F062B4AD2B087BB4002330B3 /* DataStructures.swift in Sources */,
 				E0769AFE2AE6DF2600B08067 /* LoginView.swift in Sources */,
 				F078A3182B0773F400E6F258 /* AddOrderView.swift in Sources */,
 				E04834AA2B02D3300047C39F /* HomePageView.swift in Sources */,
-				F03028642B0F01A900997B67 /* MapView.swift in Sources */,
 				F0061CE02B098F990039D51C /* ProfileView.swift in Sources */,
 				E0769AFC2AE6DF2600B08067 /* INVControlApp.swift in Sources */,
 			);
