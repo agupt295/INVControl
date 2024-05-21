@@ -10,12 +10,10 @@ enum ActiveAlert: Identifiable {
 struct SignupView: View {
     
     @StateObject private var viewModel = SignInEmailViewModel()
-    
     @State var userName: String=""
     @State var email: String=""
     @State var password: String=""
     @State var confirmPassword: String=""
-    
     @State private var activeAlert: ActiveAlert?
     
     var body: some View {
@@ -96,7 +94,6 @@ struct SignupView: View {
                             )
                         }
                     }
-                    
                 }
             }
         }
