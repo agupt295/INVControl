@@ -136,7 +136,7 @@
 			children = (
 				F0A3037E2B0F1CEE00D12067 /* Info.plist */,
 				F0061CDE2B098F8C0039D51C /* profile */,
-				F062B4B22B095E12002330B3 /* help */,
+				F062B4B22B095E12002330B3 /* Help_Section */,
 				F062B4AB2B087B83002330B3 /* backend */,
 				F078A31C2B077E4A00E6F258 /* ordering */,
 				F078A3192B077C6500E6F258 /* checkStatus */,
@@ -178,12 +178,12 @@
 			path = backend;
 			sourceTree = "<group>";
 		};
-		F062B4B22B095E12002330B3 /* help */ = {
+		F062B4B22B095E12002330B3 /* Help_Section */ = {
 			isa = PBXGroup;
 			children = (
 				F062B4B32B095E29002330B3 /* HelpView.swift */,
 			);
-			path = help;
+			path = Help_Section;
 			sourceTree = "<group>";
 		};
 		F078A3132B076FD400E6F258 /* User_Authentication */ = {
