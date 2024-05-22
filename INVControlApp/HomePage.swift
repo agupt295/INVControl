@@ -26,14 +26,14 @@ struct HomePage: View {
                 }
                 .tag(1)
             
-            InvStatus()
+            InventoryStatusView()
                 .tabItem {
                     Image(systemName: "eye.circle.fill")
                     Text("View Inventory")
                 }
                 .tag(2)
             
-            OrderFromInv()
+            UpdateInvView()
                 .tabItem {
                     Image(systemName: "fork.knife.circle.fill")
                     Text("Orders")

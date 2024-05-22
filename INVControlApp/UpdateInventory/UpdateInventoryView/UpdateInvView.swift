@@ -1,15 +1,14 @@
 import SwiftUI
 
-struct OrderFromInv: View {
-    @StateObject private var viewModel = UserManager()
+struct UpdateInvView: View {
+    @StateObject private var userManager = UserManager()
     @StateObject private var profileViewModel = LoadCurrentUserModel()
-    
+    @StateObject private var viewModel = UpdateInv_Handler()
     @State private var listOfProductToOrder: [AnOrder] = []
     @State private var productArray: [Product] = []
     @State private var itemsListCopy: [Item] = []
     @State private var updateStatus_text: String = ""
     @State private var user: DBUser? = nil
-    
     @State private var showAlert = false
     @State private var updateStatus = false
     @State private var isProfileSheetPresented = false
@@ -23,7 +22,7 @@ struct OrderFromInv: View {
             }
             .onAppear {
                 Task {
-                    await loadCurrentUser()
+                    self.user = try await profileViewModel.loadCurrentUser()
                     productArray = user!.productList
                     itemsListCopy = user!.itemList
                     
@@ -90,8 +89,9 @@ struct OrderFromInv: View {
                             
                             Task {
                                 do {
-                                    if updateINV(listOfProductToOrder: listOfProductToOrder) {
-                                        await changeItemsArrayInDB(itemsListCopy: itemsListCopy)
+                                    if let updatedItemsListCopy = viewModel.updateINV(listOfProductToOrder: listOfProductToOrder, itemsListCopy: itemsListCopy) {
+//                                        await changeItemsArrayInDB(itemsListCopy: itemsListCopy)
+                                        await viewModel.changeItemsArrayInDB(user: self.user!, itemsListCopy: updatedItemsListCopy)
                                         print("Items deducted from your inventory!")
                                     } else {
                                         print("Insufficient Stocks!")
@@ -106,62 +106,56 @@ struct OrderFromInv: View {
                 }
             }
             .task{
-                
-                await loadCurrentUser()
-                productArray = user!.productList
-                itemsListCopy = user!.itemList
-                
-                listOfProductToOrder = {
-                    return productArray.map { product in
-                        return AnOrder(productObj: product, quantity: 0)
-                    };
-                }()
-            }
-        }
-    }
-    
-    func loadCurrentUser() async {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-        } catch {
-            print(error)
-        }
-    }
-    
-    func changeItemsArrayInDB(itemsListCopy: [Item]) async {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-            try await viewModel.setUpdateditemsArray(userId: (user?.userId)!, newItemsList: itemsListCopy)
-        } catch {
-            print(error)
-        }
-    }
-    
-    func updateINV(listOfProductToOrder: [AnOrder]) -> Bool {
-        for order in listOfProductToOrder {
-            if !updateINVperOrder(with: order) {
-                return false
-            }
-        }
-        return true
-    }
-    
-    func updateINVperOrder(with order: AnOrder) -> Bool {
-        let orderedProduct = order.productObj
-        for orderedItem in orderedProduct.requiredItemList {
-            if let index = itemsListCopy.firstIndex(where: { $0.name == orderedItem.name }) {
-                itemsListCopy[index].quantity -= orderedItem.quantity * order.quantity
-                // Ensure quantity doesn't go below zero
-                if itemsListCopy[index].quantity < 0 {
-                    return false
+                do {
+                    self.user = try await profileViewModel.loadCurrentUser()
+                    productArray = user!.productList
+                    itemsListCopy = user!.itemList
+                    
+                    listOfProductToOrder = {
+                        return productArray.map { product in
+                            return AnOrder(productObj: product, quantity: 0)
+                        };
+                    }()
+                } catch {
+                    print(error)
                 }
-            } else {
-                print("Item \(orderedItem.name) not found in inventory.")
-                // Handle the case where the item is not found in inventory
             }
         }
-        return true
     }
+    
+//    func changeItemsArrayInDB(itemsListCopy: [Item]) async {
+//        do {
+//            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
+//            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
+//            try await userManager.setUpdateditemsArray(userId: (user?.userId)!, newItemsList: itemsListCopy)
+//        } catch {
+//            print(error)
+//        }
+//    }
+//    
+//    func updateINV(listOfProductToOrder: [AnOrder]) -> Bool {
+//        for order in listOfProductToOrder {
+//            if !viewModel.updateINVperOrder(with: order, itemsListCopy: itemsListCopy) {
+//                return false
+//            }
+//        }
+//        return true
+//    }
+//    
+//    func updateINVperOrder(with order: AnOrder, itemsListCopy:[Item]) -> Bool {
+//        let orderedProduct = order.productObj
+//        for orderedItem in orderedProduct.requiredItemList {
+//            if let index = itemsListCopy.firstIndex(where: { $0.name == orderedItem.name }) {
+//                self.itemsListCopy[index].quantity -= orderedItem.quantity * order.quantity
+//                // Ensure quantity doesn't go below zero
+//                if itemsListCopy[index].quantity < 0 {
+//                    return false
+//                }
+//            } else {
+//                print("Item \(orderedItem.name) not found in inventory.")
+//                // Handle the case where the item is not found in inventory
+//            }
+//        }
+//        return true
+//    }
 }

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct InvStatus: View {
+struct InventoryStatusView: View {
     @StateObject private var profileViewModel = LoadCurrentUserModel()
     @State private var isProfileSheetPresented = false
     @State private var user: DBUser? = nil
@@ -14,7 +14,7 @@ struct InvStatus: View {
             }
             .onAppear {
                 Task{
-                    await loadCurrentUser()
+                    self.user = try await profileViewModel.loadCurrentUser()
                     itemsfromDB = user!.itemList
                 }
                 isLoading = false
@@ -49,19 +49,13 @@ struct InvStatus: View {
                 ProfileView()
             }
             .task{
-                // user = try? await profileViewModel.loadCurrentUser()
-                await loadCurrentUser()
-                itemsfromDB = user!.itemList
+                do {
+                    self.user = try await profileViewModel.loadCurrentUser()
+                    itemsfromDB = user!.itemList
+                } catch {
+                    print(error)
+                }
             }
-        }
-    }
-    
-    func loadCurrentUser() async {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-        } catch {
-            print(error)
         }
     }
 }
