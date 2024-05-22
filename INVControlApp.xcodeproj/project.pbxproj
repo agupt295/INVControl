@@ -51,6 +51,7 @@
 		F078A31E2B07800500E6F258 /* OrderFromInv.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A31D2B07800500E6F258 /* OrderFromInv.swift */; };
 		F07EEAA02BFDA7870046971F /* AddItem_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07EEA9F2BFDA7870046971F /* AddItem_ViewModel.swift */; };
 		F09B5EAF2B0C0139009392B5 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09B5EAE2B0C0139009392B5 /* UserManager.swift */; };
+		F0C4A73E2BFDD92B0060FADD /* AddOrder_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C4A73D2BFDD92B0060FADD /* AddOrder_ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,7 @@
 		F07EEA9F2BFDA7870046971F /* AddItem_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItem_ViewModel.swift; sourceTree = "<group>"; };
 		F09B5EAE2B0C0139009392B5 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		F0A3037E2B0F1CEE00D12067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0C4A73D2BFDD92B0060FADD /* AddOrder_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrder_ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +264,7 @@
 		F07EEAA62BFDB2A30046971F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				F0C4A73D2BFDD92B0060FADD /* AddOrder_ViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				E0769AFE2AE6DF2600B08067 /* LoginView.swift in Sources */,
 				F07EEAA02BFDA7870046971F /* AddItem_ViewModel.swift in Sources */,
 				F078A3182B0773F400E6F258 /* AddOrderView.swift in Sources */,
+				F0C4A73E2BFDD92B0060FADD /* AddOrder_ViewModel.swift in Sources */,
 				E04834AA2B02D3300047C39F /* HomePageView.swift in Sources */,
 				F0061CE02B098F990039D51C /* ProfileView.swift in Sources */,
 				E0769AFC2AE6DF2600B08067 /* INVControlApp.swift in Sources */,

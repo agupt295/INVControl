@@ -4,7 +4,6 @@ struct AddItemView: View {
     @StateObject private var userManager = UserManager()
     @StateObject private var profileViewModel = LoadCurrentUserModel()
     @StateObject private var viewModel = AddItem_Handler()
-    
     @State private var isAddItemSheetPresented = false
     @State private var isProfileSheetPresented = false
     @State private var newItemName = ""
@@ -20,7 +19,7 @@ struct AddItemView: View {
             }
             .onAppear {
                 Task {
-                    await loadCurrentUser()
+                    self.user = try await profileViewModel.loadCurrentUser()
                     isLoading = false
                 }
             }
@@ -100,18 +99,12 @@ struct AddItemView: View {
                 }
             }
             .task{
-                await loadCurrentUser()
+                do {
+                    self.user = try await profileViewModel.loadCurrentUser()
+                } catch {
+                    print(error)
+                }
             }
-        }
-    }
-    
-    func loadCurrentUser() async {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-            
-        } catch {
-            print(error)
         }
     }
 }

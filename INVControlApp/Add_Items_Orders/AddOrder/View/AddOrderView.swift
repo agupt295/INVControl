@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct AddOrderView: View {
-    @StateObject private var viewModel = UserManager()
+    @StateObject private var userManager = UserManager()
     @StateObject private var profileViewModel = LoadCurrentUserModel()
+    @StateObject private var viewModel = AddOrder_Handler()
     @State private var productArray: [Product] = []
     @State private var itemsArrayCopy: [Item] = []
     @State private var isAddItemSheetPresented = false
@@ -20,7 +21,7 @@ struct AddOrderView: View {
             }
             .onAppear {
                 Task {
-                    await loadCurrentUser()
+                    self.user = try await profileViewModel.loadCurrentUser()
                     productArray = user!.productList
                     
                     itemsArrayCopy = user!.itemList.map { item in
@@ -76,8 +77,7 @@ struct AddOrderView: View {
                         }
                         .onAppear {
                             Task {
-                                await loadCurrentUser()
-                                productArray = user!.productList
+                                self.user = try await profileViewModel.loadCurrentUser()
                                 
                                 itemsArrayCopy = user!.itemList.map { item in
                                     return Item(name: item.name, quantity: 0)
@@ -105,7 +105,15 @@ struct AddOrderView: View {
                                 }
                                 
                                 Button("Add Order") {
-                                    addProduct()
+                                    Task {
+                                        do {
+                                            self.user = try await viewModel.addProduct(user: self.user!, orderName: orderName, itemsArrayCopy: itemsArrayCopy)
+                                            productArray = user!.productList
+                                            
+                                        } catch {
+                                            print(error)
+                                        }
+                                    }
                                     isAddItemSheetPresented.toggle()
                                 }
                                 .foregroundColor(.red)
@@ -132,31 +140,12 @@ struct AddOrderView: View {
                 }
             }
             .task{
-                await loadCurrentUser()
+                do {
+                    self.user = try await profileViewModel.loadCurrentUser()
+                } catch {
+                    print(error)
+                }
             }
-        }
-    }
-    
-    func addProduct() {
-        Task{
-            do {
-                let newProduct = Product(name: orderName, requiredItemList: itemsArrayCopy.filter { $0.quantity > 0 })
-                try await viewModel.addProductList(userId: (user?.userId)!, newProduct: newProduct)
-                self.user = try await profileViewModel.loadCurrentUser()
-                productArray = user!.productList
-                
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    func loadCurrentUser() async {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-        } catch {
-            print(error)
         }
     }
     
