@@ -138,7 +138,7 @@
 				F062B4AB2B087B83002330B3 /* Backend_Structure */,
 				F078A31C2B077E4A00E6F258 /* ordering */,
 				F078A3192B077C6500E6F258 /* checkStatus */,
-				F078A3142B07701700E6F258 /* addingItemsOrOrders */,
+				F078A3142B07701700E6F258 /* Add_Items_Orders */,
 				F078A3132B076FD400E6F258 /* User_Authentication */,
 				E0769AFB2AE6DF2600B08067 /* INVControlApp.swift */,
 				E04834AB2B02E6660047C39F /* HomePage.swift */,
@@ -193,13 +193,13 @@
 			path = User_Authentication;
 			sourceTree = "<group>";
 		};
-		F078A3142B07701700E6F258 /* addingItemsOrOrders */ = {
+		F078A3142B07701700E6F258 /* Add_Items_Orders */ = {
 			isa = PBXGroup;
 			children = (
 				F078A3152B07702E00E6F258 /* AddItemView.swift */,
 				F078A3172B0773F400E6F258 /* AddOrderView.swift */,
 			);
-			path = addingItemsOrOrders;
+			path = Add_Items_Orders;
 			sourceTree = "<group>";
 		};
 		F078A3192B077C6500E6F258 /* checkStatus */ = {

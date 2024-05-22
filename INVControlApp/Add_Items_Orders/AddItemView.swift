@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AddItemView: View {
     @StateObject private var viewModel = UserManager()
-    @StateObject private var profileViewModel = ProfileViewModel()
+    @StateObject private var profileViewModel = LoadCurrentUserModel()
     
     @State private var isAddItemSheetPresented = false
     @State private var isProfileSheetPresented = false
@@ -96,7 +96,6 @@ struct AddItemView: View {
                 await loadCurrentUser()
             }
         }
-            
     }
     
     func addItem() {
@@ -117,14 +116,11 @@ struct AddItemView: View {
         }
     }
     
-    func deleteItem(at offsets: IndexSet) {
-        
-    }
-    
     func loadCurrentUser() async {
         do {
             let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
             self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
+            
         } catch {
             print(error)
         }

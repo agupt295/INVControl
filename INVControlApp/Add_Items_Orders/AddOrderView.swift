@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AddOrderView: View {
     @StateObject private var viewModel = UserManager()
-    @StateObject private var profileViewModel = ProfileViewModel()
+    @StateObject private var profileViewModel = LoadCurrentUserModel()
     
     @State private var productArray: [Product] = []
     @State private var itemsArrayCopy: [Item] = []
@@ -48,9 +48,6 @@ struct AddOrderView: View {
                                 }
                             }
                         }
-                        // .onDelete(perform: { indexSet in
-                        //      listOfOrders.orders.remove(atOffsets: indexSet)
-                        //  })
                     }
                     .accentColor(.red)
                     
@@ -108,7 +105,6 @@ struct AddOrderView: View {
                                             Stepper(value: $itemsArrayCopy[itemIndex].quantity, in: 0...100) {
                                                 Text("Qty: \(itemsArrayCopy[itemIndex].quantity)")
                                             }
-                                            // itemsArrTemp
                                         }
                                     }
                                 }

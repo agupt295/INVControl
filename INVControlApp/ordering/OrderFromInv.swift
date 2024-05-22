@@ -2,7 +2,7 @@ import SwiftUI
 
 struct OrderFromInv: View {
     @StateObject private var viewModel = UserManager()
-    @StateObject private var profileViewModel = ProfileViewModel()
+    @StateObject private var profileViewModel = LoadCurrentUserModel()
     
     @State private var listOfProductToOrder: [AnOrder] = []
     @State private var productArray: [Product] = []

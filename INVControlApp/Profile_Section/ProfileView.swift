@@ -1,27 +1,11 @@
 import SwiftUI
 import MapKit
 
-@MainActor
-final class ProfileViewModel: ObservableObject {
-    @Published private(set) var user: DBUser? = nil    
-    
-    func loadCurrentUser() async throws -> DBUser {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-            return self.user!
-        } catch {
-            print(error)
-        }
-        return self.user!
-    }
-}
-
 struct ProfileView: View {
     
     @State private var showAlert = false
     @State var location: String = "India"
-    @StateObject private var viewModel = ProfileViewModel()
+    @StateObject private var viewModel = LoadCurrentUserModel()
     
     var body: some View {
         Form {

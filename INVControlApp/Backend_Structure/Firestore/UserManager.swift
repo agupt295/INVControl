@@ -2,6 +2,22 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+@MainActor
+final class LoadCurrentUserModel: ObservableObject {
+    @Published private(set) var user: DBUser? = nil
+    
+    func loadCurrentUser() async throws -> DBUser {
+        do {
+            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
+            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
+            return self.user!
+        } catch {
+            print(error)
+        }
+        return self.user!
+    }
+}
+
 struct Item: Codable, Identifiable {
     var id = UUID() // for Identifiable
     var name: String

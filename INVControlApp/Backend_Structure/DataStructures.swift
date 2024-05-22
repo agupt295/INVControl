@@ -27,43 +27,44 @@ final class SignInEmailViewModel: ObservableObject {
     }
 }
 
+//
 // Each Order contains a list of [Item]
-struct Order: Identifiable {
-    let id = UUID()
-    var name: String = ""
-    var itemList: [Item]
-    
-    init(name: String, items: [Item]) {
-        self.name = name
-        self.itemList = items
-    }
-}
-
-// All the Orders a User can have
-struct OrderList: Identifiable {
-    let id = UUID()
-    var orders: [Order]
-}
-
-// This is just an array that stores 1 Order and its Quantity
-struct SpecificProductOrdered: Identifiable {
-    let id = UUID()
-    var order: Order
-    var quantity: Int
-    
-    init(order: Order, quantity: Int) {
-        self.order = order
-        self.quantity = quantity
-    }
-}
-
-func initializeAllProductOrderedList(from orderList: OrderList) -> [SpecificProductOrdered] {
-    var allProductOrderedList: [SpecificProductOrdered] = []
-    
-    for order in orderList.orders {
-        let specificProductOrdered = SpecificProductOrdered(order: order, quantity: 0)
-        allProductOrderedList.append(specificProductOrdered)
-    }
-    
-    return allProductOrderedList
-}
+//struct Order: Identifiable {
+//    let id = UUID()
+//    var name: String = ""
+//    var itemList: [Item]
+//    
+//    init(name: String, items: [Item]) {
+//        self.name = name
+//        self.itemList = items
+//    }
+//}
+//
+//// All the Orders a User can have
+//struct OrderList: Identifiable {
+//    let id = UUID()
+//    var orders: [Order]
+//}
+//
+//// This is just an array that stores 1 Order and its Quantity
+//struct SpecificProductOrdered: Identifiable {
+//    let id = UUID()
+//    var order: Order
+//    var quantity: Int
+//    
+//    init(order: Order, quantity: Int) {
+//        self.order = order
+//        self.quantity = quantity
+//    }
+//}
+//
+//func initializeAllProductOrderedList(from orderList: OrderList) -> [SpecificProductOrdered] {
+//    var allProductOrderedList: [SpecificProductOrdered] = []
+//    
+//    for order in orderList.orders {
+//        let specificProductOrdered = SpecificProductOrdered(order: order, quantity: 0)
+//        allProductOrderedList.append(specificProductOrdered)
+//    }
+//    
+//    return allProductOrderedList
+//}
