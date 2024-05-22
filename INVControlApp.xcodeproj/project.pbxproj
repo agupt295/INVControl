@@ -48,10 +48,11 @@
 		F078A3162B07702E00E6F258 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A3152B07702E00E6F258 /* AddItemView.swift */; };
 		F078A3182B0773F400E6F258 /* AddOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A3172B0773F400E6F258 /* AddOrderView.swift */; };
 		F078A31B2B077C8E00E6F258 /* InvStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A31A2B077C8E00E6F258 /* InvStatus.swift */; };
-		F078A31E2B07800500E6F258 /* OrderFromInv.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A31D2B07800500E6F258 /* OrderFromInv.swift */; };
+		F078A31E2B07800500E6F258 /* UpdateInvView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A31D2B07800500E6F258 /* UpdateInvView.swift */; };
 		F07EEAA02BFDA7870046971F /* AddItem_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07EEA9F2BFDA7870046971F /* AddItem_ViewModel.swift */; };
 		F09B5EAF2B0C0139009392B5 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09B5EAE2B0C0139009392B5 /* UserManager.swift */; };
 		F0C4A73E2BFDD92B0060FADD /* AddOrder_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C4A73D2BFDD92B0060FADD /* AddOrder_ViewModel.swift */; };
+		F0D3B1D52BFEB51100023F84 /* UpdateInvViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D3B1D42BFEB51100023F84 /* UpdateInvViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,11 +71,12 @@
 		F078A3152B07702E00E6F258 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 		F078A3172B0773F400E6F258 /* AddOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrderView.swift; sourceTree = "<group>"; };
 		F078A31A2B077C8E00E6F258 /* InvStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvStatus.swift; sourceTree = "<group>"; };
-		F078A31D2B07800500E6F258 /* OrderFromInv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFromInv.swift; sourceTree = "<group>"; };
+		F078A31D2B07800500E6F258 /* UpdateInvView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInvView.swift; sourceTree = "<group>"; };
 		F07EEA9F2BFDA7870046971F /* AddItem_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItem_ViewModel.swift; sourceTree = "<group>"; };
 		F09B5EAE2B0C0139009392B5 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		F0A3037E2B0F1CEE00D12067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0C4A73D2BFDD92B0060FADD /* AddOrder_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrder_ViewModel.swift; sourceTree = "<group>"; };
+		F0D3B1D42BFEB51100023F84 /* UpdateInvViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInvViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,7 +140,7 @@
 				F0061CDE2B098F8C0039D51C /* Profile_Section */,
 				F062B4B22B095E12002330B3 /* Help_Section */,
 				F062B4AB2B087B83002330B3 /* Backend_Structure */,
-				F078A31C2B077E4A00E6F258 /* ordering */,
+				F078A31C2B077E4A00E6F258 /* UpdateInventory */,
 				F078A3192B077C6500E6F258 /* checkStatus */,
 				F078A3142B07701700E6F258 /* Add_Items_Orders */,
 				F078A3132B076FD400E6F258 /* User_Authentication */,
@@ -211,12 +213,13 @@
 			path = checkStatus;
 			sourceTree = "<group>";
 		};
-		F078A31C2B077E4A00E6F258 /* ordering */ = {
+		F078A31C2B077E4A00E6F258 /* UpdateInventory */ = {
 			isa = PBXGroup;
 			children = (
-				F078A31D2B07800500E6F258 /* OrderFromInv.swift */,
+				F0D3B1D22BFEB44C00023F84 /* View */,
+				F0D3B1D32BFEB4F200023F84 /* ViewModel */,
 			);
-			path = ordering;
+			path = UpdateInventory;
 			sourceTree = "<group>";
 		};
 		F07EEAA12BFDB2640046971F /* AddItem */ = {
@@ -275,6 +278,22 @@
 				F09B5EAE2B0C0139009392B5 /* UserManager.swift */,
 			);
 			path = Firestore;
+			sourceTree = "<group>";
+		};
+		F0D3B1D22BFEB44C00023F84 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F078A31D2B07800500E6F258 /* UpdateInvView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F0D3B1D32BFEB4F200023F84 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F0D3B1D42BFEB51100023F84 /* UpdateInvViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,7 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F062B4B42B095E29002330B3 /* HelpView.swift in Sources */,
-				F078A31E2B07800500E6F258 /* OrderFromInv.swift in Sources */,
+				F078A31E2B07800500E6F258 /* UpdateInvView.swift in Sources */,
 				F0061D1B2B09C13D0039D51C /* AuthenticationManager.swift in Sources */,
 				E0769B0A2AE74A2900B08067 /* SignupView.swift in Sources */,
 				E04834AC2B02E6660047C39F /* HomePage.swift in Sources */,
@@ -395,6 +414,7 @@
 				E04834AA2B02D3300047C39F /* HomePageView.swift in Sources */,
 				F0061CE02B098F990039D51C /* ProfileView.swift in Sources */,
 				E0769AFC2AE6DF2600B08067 /* INVControlApp.swift in Sources */,
+				F0D3B1D52BFEB51100023F84 /* UpdateInvViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

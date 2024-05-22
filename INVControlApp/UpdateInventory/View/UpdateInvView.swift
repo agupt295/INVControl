@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct OrderFromInv: View {
+struct UpdateInvView: View {
     @StateObject private var viewModel = UserManager()
     @StateObject private var profileViewModel = LoadCurrentUserModel()
     
@@ -9,7 +9,6 @@ struct OrderFromInv: View {
     @State private var itemsListCopy: [Item] = []
     @State private var updateStatus_text: String = ""
     @State private var user: DBUser? = nil
-    
     @State private var showAlert = false
     @State private var updateStatus = false
     @State private var isProfileSheetPresented = false
@@ -23,7 +22,8 @@ struct OrderFromInv: View {
             }
             .onAppear {
                 Task {
-                    await loadCurrentUser()
+//                    await loadCurrentUser()
+                    self.user = try await profileViewModel.loadCurrentUser()
                     productArray = user!.productList
                     itemsListCopy = user!.itemList
                     
@@ -106,26 +106,21 @@ struct OrderFromInv: View {
                 }
             }
             .task{
-                
-                await loadCurrentUser()
-                productArray = user!.productList
-                itemsListCopy = user!.itemList
-                
-                listOfProductToOrder = {
-                    return productArray.map { product in
-                        return AnOrder(productObj: product, quantity: 0)
-                    };
-                }()
+//                await loadCurrentUser()
+                do {
+                    self.user = try await profileViewModel.loadCurrentUser()
+                    productArray = user!.productList
+                    itemsListCopy = user!.itemList
+                    
+                    listOfProductToOrder = {
+                        return productArray.map { product in
+                            return AnOrder(productObj: product, quantity: 0)
+                        };
+                    }()
+                } catch {
+                    print(error)
+                }
             }
-        }
-    }
-    
-    func loadCurrentUser() async {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-        } catch {
-            print(error)
         }
     }
     

@@ -33,7 +33,7 @@ struct HomePage: View {
                 }
                 .tag(2)
             
-            OrderFromInv()
+            UpdateInvView()
                 .tabItem {
                     Image(systemName: "fork.knife.circle.fill")
                     Text("Orders")
