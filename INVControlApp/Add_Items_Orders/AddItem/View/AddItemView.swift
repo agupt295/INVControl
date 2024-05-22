@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct AddItemView: View {
-    @StateObject private var viewModel = UserManager()
+    @StateObject private var userManager = UserManager()
     @StateObject private var profileViewModel = LoadCurrentUserModel()
+    @StateObject private var viewModel = AddItem_Handler()
     
     @State private var isAddItemSheetPresented = false
     @State private var isProfileSheetPresented = false
@@ -10,7 +11,6 @@ struct AddItemView: View {
     @State private var newItemQuantity = 0
     @State private var user: DBUser? = nil
     @State private var isLoading = true
-    @State private var itemsfromDB:[Item] = []
     
     var body: some View {
         if isLoading {
@@ -21,7 +21,6 @@ struct AddItemView: View {
             .onAppear {
                 Task {
                     await loadCurrentUser()
-                    itemsfromDB = user!.itemList
                     isLoading = false
                 }
             }
@@ -69,7 +68,15 @@ struct AddItemView: View {
                                 }
                             }
                             Button("Add Item") {
-                                addItem()
+                                Task {
+                                    do {
+                                        self.user = try await viewModel.addItem(user: self.user!, newItemName: newItemName, newItemQuantity: newItemQuantity)
+                                        newItemName = ""
+                                        newItemQuantity = 0
+                                    } catch {
+                                        print(error)
+                                    }
+                                }
                                 isAddItemSheetPresented.toggle()
                             }
                             .foregroundColor(.red)
@@ -94,24 +101,6 @@ struct AddItemView: View {
             }
             .task{
                 await loadCurrentUser()
-            }
-        }
-    }
-    
-    func addItem() {
-        Task{
-            do {
-                let newItem = Item(name: newItemName, quantity: newItemQuantity)
-                try await viewModel.addItemList(userId: (user?.userId)!, newItem: newItem)
-                
-                self.user = try await profileViewModel.loadCurrentUser()
-                itemsfromDB = user!.itemList
-                
-                newItemName = ""
-                newItemQuantity = 0
-                
-            } catch {
-                print(error)
             }
         }
     }

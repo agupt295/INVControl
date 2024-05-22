@@ -3,17 +3,12 @@ import SwiftUI
 struct AddOrderView: View {
     @StateObject private var viewModel = UserManager()
     @StateObject private var profileViewModel = LoadCurrentUserModel()
-    
     @State private var productArray: [Product] = []
     @State private var itemsArrayCopy: [Item] = []
-    
     @State private var isAddItemSheetPresented = false
     @State private var isProfileSheetPresented = false
-    
     @State private var orderName: String = ""
-    
     @State private var user: DBUser? = nil
-    
     @State private var isLoading = true
     @State private var isLoadingTwo = true
     

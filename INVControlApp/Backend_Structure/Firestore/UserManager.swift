@@ -18,6 +18,33 @@ final class LoadCurrentUserModel: ObservableObject {
     }
 }
 
+@MainActor
+final class SignInEmailViewModel: ObservableObject {
+    func signIn(email: String, password: String, username: String) async -> Bool{
+        do{
+            let returedUserData = try await AuthenticationManager.shared.createuser(email: email, password: password)
+            let userInfo = DBUser(userId: returedUserData.uid, email: email, username: username, password: password, itemList: [], productList: [])
+            try await UserManager.shared.createNewUser(user: userInfo)
+            return true
+            
+        } catch {
+            print("Error: \(error)")
+            return false
+        }
+    }
+    
+    func login(email: String, password: String) async -> Bool {
+        do{
+            _ = try await AuthenticationManager.shared.Login(email: email, password: password)
+            return true
+            
+        } catch {
+            print("{ERROR}: \(error)")
+            return false
+        }
+    }
+}
+
 struct Item: Codable, Identifiable {
     var id = UUID() // for Identifiable
     var name: String
@@ -52,8 +79,8 @@ struct DBUser: Codable {
 final class UserManager: ObservableObject {
     
     static let shared = UserManager()
-    
     private let userCollection = Firestore.firestore().collection("Users")
+    
     private func userDocument(userId: String) -> DocumentReference {
         userCollection.document(userId)
     }
@@ -83,5 +110,4 @@ final class UserManager: ObservableObject {
         user.itemList = newItemsList
         try userDocument(userId: userId).setData(from: user)
     }
-    
 }
