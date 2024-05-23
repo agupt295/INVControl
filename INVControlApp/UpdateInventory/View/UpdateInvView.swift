@@ -22,7 +22,6 @@ struct UpdateInvView: View {
             }
             .onAppear {
                 Task {
-//                    await loadCurrentUser()
                     self.user = try await profileViewModel.loadCurrentUser()
                     productArray = user!.productList
                     itemsListCopy = user!.itemList
@@ -32,7 +31,6 @@ struct UpdateInvView: View {
                             return AnOrder(productObj: product, quantity: 0)
                         };
                     }()
-                    
                     isLoading = false
                 }
             }
@@ -106,7 +104,6 @@ struct UpdateInvView: View {
                 }
             }
             .task{
-//                await loadCurrentUser()
                 do {
                     self.user = try await profileViewModel.loadCurrentUser()
                     productArray = user!.productList
@@ -136,7 +133,7 @@ struct UpdateInvView: View {
     
     func updateINV(listOfProductToOrder: [AnOrder]) -> Bool {
         for order in listOfProductToOrder {
-            if !updateINVperOrder(with: order) {
+            if order.quantity != 0 && !updateINVperOrder(with: order) {
                 return false
             }
         }
@@ -146,6 +143,7 @@ struct UpdateInvView: View {
     func updateINVperOrder(with order: AnOrder) -> Bool {
         let orderedProduct = order.productObj
         for orderedItem in orderedProduct.requiredItemList {
+            
             if let index = itemsListCopy.firstIndex(where: { $0.name == orderedItem.name }) {
                 itemsListCopy[index].quantity -= orderedItem.quantity * order.quantity
                 // Ensure quantity doesn't go below zero
