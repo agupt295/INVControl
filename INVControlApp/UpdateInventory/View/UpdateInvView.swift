@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct UpdateInvView: View {
-    @StateObject private var viewModel = UserManager()
+    @StateObject private var userManager = UserManager()
     @StateObject private var profileViewModel = LoadCurrentUserModel()
+    @StateObject private var viewModel = UpdateInv_Handler()
     
     @State private var listOfProductToOrder: [AnOrder] = []
     @State private var productArray: [Product] = []
@@ -88,8 +89,10 @@ struct UpdateInvView: View {
                             
                             Task {
                                 do {
-                                    if updateINV(listOfProductToOrder: listOfProductToOrder) {
-                                        await changeItemsArrayInDB(itemsListCopy: itemsListCopy)
+                                    let itemsToDeduct = viewModel.updateINV(listOfProductToOrder: listOfProductToOrder, itemsListCopy: itemsListCopy)!
+                                    
+                                    if !itemsToDeduct.isEmpty {
+                                        await viewModel.changeItemsArrayInDB(user: self.user!, itemsListCopy: itemsToDeduct)
                                         print("Items deducted from your inventory!")
                                     } else {
                                         print("Insufficient Stocks!")
@@ -119,42 +122,5 @@ struct UpdateInvView: View {
                 }
             }
         }
-    }
-    
-    func changeItemsArrayInDB(itemsListCopy: [Item]) async {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-            try await viewModel.setUpdateditemsArray(userId: (user?.userId)!, newItemsList: itemsListCopy)
-        } catch {
-            print(error)
-        }
-    }
-    
-    func updateINV(listOfProductToOrder: [AnOrder]) -> Bool {
-        for order in listOfProductToOrder {
-            if order.quantity != 0 && !updateINVperOrder(with: order) {
-                return false
-            }
-        }
-        return true
-    }
-    
-    func updateINVperOrder(with order: AnOrder) -> Bool {
-        let orderedProduct = order.productObj
-        for orderedItem in orderedProduct.requiredItemList {
-            
-            if let index = itemsListCopy.firstIndex(where: { $0.name == orderedItem.name }) {
-                itemsListCopy[index].quantity -= orderedItem.quantity * order.quantity
-                // Ensure quantity doesn't go below zero
-                if itemsListCopy[index].quantity < 0 {
-                    return false
-                }
-            } else {
-                print("Item \(orderedItem.name) not found in inventory.")
-                // Handle the case where the item is not found in inventory
-            }
-        }
-        return true
     }
 }
