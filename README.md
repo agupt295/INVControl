@@ -6,8 +6,8 @@ This iOS based application is implemented to help the users add Items to their I
 # Use-Case Diagram
 
 It is a visual representation of the functional requirements of a system, illustrating the interactions between users (actors) and the system itself. It identifies the various use cases, which are specific functionalities or services provided by the system, and shows how these use cases are related to the actors who initiate them.
-<include> : To represent the functionality of the use case
-<extend> : To represent optional or conditional behavior that extends the base use case
+(include) : To represent the functionality of the use case
+(extend) : To represent optional or conditional behavior that extends the base use case
 
 <img width="978" alt="Screenshot 2024-05-23 at 12 17 33 AM" src="https://github.com/agupt295/INVControl/assets/118144312/884d8ecb-d5d8-45ba-aa3f-6d3b6f1ae306">
 
