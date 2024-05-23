@@ -14,7 +14,7 @@ struct InventoryStatusView: View {
             }
             .onAppear {
                 Task{
-                    await loadCurrentUser()
+                    self.user = try await profileViewModel.loadCurrentUser()
                     itemsfromDB = user!.itemList
                 }
                 isLoading = false
@@ -49,19 +49,13 @@ struct InventoryStatusView: View {
                 ProfileView()
             }
             .task{
-                // user = try? await profileViewModel.loadCurrentUser()
-                await loadCurrentUser()
-                itemsfromDB = user!.itemList
+                do {
+                    self.user = try await profileViewModel.loadCurrentUser()
+                    itemsfromDB = user!.itemList
+                } catch {
+                    print(error)
+                }
             }
-        }
-    }
-    
-    func loadCurrentUser() async {
-        do {
-            let authDataResult = AuthenticationManager.shared.getAuthenticatedUser()
-            self.user = try await UserManager.shared.getUser(userId: authDataResult!.uid)
-        } catch {
-            print(error)
         }
     }
 }
