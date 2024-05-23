@@ -15,3 +15,5 @@ It is a visual representation of the functional requirements of a system, illust
 # MVVM (Model View View-Model) Architecture
 
 MVVM is a software architectural pattern that facilitates a clear separation of concerns within applications, particularly in the context of GUIs. It divides the application into three interconnected components: the Model, which represents the data and business logic; the View, which is the UI and its structure; and the ViewModel, which acts as an intermediary that holds the presentation logic and the state of the UI. The View-Model binds the data from the Model to the View, ensuring that any changes in the data are automatically reflected in the UI, and vice versa, through data binding and command patterns. This architecture promotes modularity, testability, and maintainability by decoupling the UI from the business logic.
+
+<img width="980" alt="Screenshot 2024-05-23 at 1 01 31 AM" src="https://github.com/agupt295/INVControl/assets/118144312/8eb9bb40-a060-48a4-bba7-ea883350bf9d">
