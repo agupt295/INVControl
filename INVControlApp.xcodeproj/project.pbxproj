@@ -44,10 +44,11 @@
 		F0061D172B09B73B0039D51C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F0061D162B09B73B0039D51C /* FirebaseStorage */; };
 		F0061D192B09B73B0039D51C /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = F0061D182B09B73B0039D51C /* FirebaseStorageCombine-Community */; };
 		F0061D1B2B09C13D0039D51C /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0061D1A2B09C13D0039D51C /* AuthenticationManager.swift */; };
+		F00B01582BFF2C8E00B01CC1 /* Authentication_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00B01572BFF2C8E00B01CC1 /* Authentication_ViewModel.swift */; };
 		F062B4B42B095E29002330B3 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F062B4B32B095E29002330B3 /* HelpView.swift */; };
 		F078A3162B07702E00E6F258 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A3152B07702E00E6F258 /* AddItemView.swift */; };
 		F078A3182B0773F400E6F258 /* AddOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A3172B0773F400E6F258 /* AddOrderView.swift */; };
-		F078A31B2B077C8E00E6F258 /* InvStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A31A2B077C8E00E6F258 /* InvStatus.swift */; };
+		F078A31B2B077C8E00E6F258 /* InventoryStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A31A2B077C8E00E6F258 /* InventoryStatusView.swift */; };
 		F078A31E2B07800500E6F258 /* UpdateInvView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A31D2B07800500E6F258 /* UpdateInvView.swift */; };
 		F07EEAA02BFDA7870046971F /* AddItem_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07EEA9F2BFDA7870046971F /* AddItem_ViewModel.swift */; };
 		F09B5EAF2B0C0139009392B5 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09B5EAE2B0C0139009392B5 /* UserManager.swift */; };
@@ -67,10 +68,11 @@
 		F0061CDF2B098F990039D51C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		F0061CE12B09B5810039D51C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F0061D1A2B09C13D0039D51C /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		F00B01572BFF2C8E00B01CC1 /* Authentication_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication_ViewModel.swift; sourceTree = "<group>"; };
 		F062B4B32B095E29002330B3 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		F078A3152B07702E00E6F258 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 		F078A3172B0773F400E6F258 /* AddOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrderView.swift; sourceTree = "<group>"; };
-		F078A31A2B077C8E00E6F258 /* InvStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvStatus.swift; sourceTree = "<group>"; };
+		F078A31A2B077C8E00E6F258 /* InventoryStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryStatusView.swift; sourceTree = "<group>"; };
 		F078A31D2B07800500E6F258 /* UpdateInvView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInvView.swift; sourceTree = "<group>"; };
 		F07EEA9F2BFDA7870046971F /* AddItem_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItem_ViewModel.swift; sourceTree = "<group>"; };
 		F09B5EAE2B0C0139009392B5 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -139,9 +141,9 @@
 				F0A3037E2B0F1CEE00D12067 /* Info.plist */,
 				F0061CDE2B098F8C0039D51C /* Profile_Section */,
 				F062B4B22B095E12002330B3 /* Help_Section */,
-				F062B4AB2B087B83002330B3 /* Backend_Structure */,
+				F062B4AB2B087B83002330B3 /* Backend_Model */,
 				F078A31C2B077E4A00E6F258 /* UpdateInventory */,
-				F078A3192B077C6500E6F258 /* checkStatus */,
+				F078A3192B077C6500E6F258 /* Inventory_Status */,
 				F078A3142B07701700E6F258 /* Add_Items_Orders */,
 				F078A3132B076FD400E6F258 /* User_Authentication */,
 				E0769AFB2AE6DF2600B08067 /* INVControlApp.swift */,
@@ -169,13 +171,21 @@
 			path = Profile_Section;
 			sourceTree = "<group>";
 		};
-		F062B4AB2B087B83002330B3 /* Backend_Structure */ = {
+		F00B01562BFF2C6400B01CC1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F00B01572BFF2C8E00B01CC1 /* Authentication_ViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F062B4AB2B087B83002330B3 /* Backend_Model */ = {
 			isa = PBXGroup;
 			children = (
 				F09B5EAD2B0C0127009392B5 /* Firestore */,
 				F0061D1A2B09C13D0039D51C /* AuthenticationManager.swift */,
 			);
-			path = Backend_Structure;
+			path = Backend_Model;
 			sourceTree = "<group>";
 		};
 		F062B4B22B095E12002330B3 /* Help_Section */ = {
@@ -189,6 +199,7 @@
 		F078A3132B076FD400E6F258 /* User_Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				F00B01562BFF2C6400B01CC1 /* ViewModel */,
 				E0769AFD2AE6DF2600B08067 /* LoginView.swift */,
 				E0769B092AE74A2900B08067 /* SignupView.swift */,
 				E04834A92B02D3300047C39F /* HomePageView.swift */,
@@ -205,12 +216,12 @@
 			path = Add_Items_Orders;
 			sourceTree = "<group>";
 		};
-		F078A3192B077C6500E6F258 /* checkStatus */ = {
+		F078A3192B077C6500E6F258 /* Inventory_Status */ = {
 			isa = PBXGroup;
 			children = (
-				F078A31A2B077C8E00E6F258 /* InvStatus.swift */,
+				F078A31A2B077C8E00E6F258 /* InventoryStatusView.swift */,
 			);
-			path = checkStatus;
+			path = Inventory_Status;
 			sourceTree = "<group>";
 		};
 		F078A31C2B077E4A00E6F258 /* UpdateInventory */ = {
@@ -406,8 +417,9 @@
 				E04834AC2B02E6660047C39F /* HomePage.swift in Sources */,
 				F09B5EAF2B0C0139009392B5 /* UserManager.swift in Sources */,
 				F078A3162B07702E00E6F258 /* AddItemView.swift in Sources */,
-				F078A31B2B077C8E00E6F258 /* InvStatus.swift in Sources */,
+				F078A31B2B077C8E00E6F258 /* InventoryStatusView.swift in Sources */,
 				E0769AFE2AE6DF2600B08067 /* LoginView.swift in Sources */,
+				F00B01582BFF2C8E00B01CC1 /* Authentication_ViewModel.swift in Sources */,
 				F07EEAA02BFDA7870046971F /* AddItem_ViewModel.swift in Sources */,
 				F078A3182B0773F400E6F258 /* AddOrderView.swift in Sources */,
 				F0C4A73E2BFDD92B0060FADD /* AddOrder_ViewModel.swift in Sources */,

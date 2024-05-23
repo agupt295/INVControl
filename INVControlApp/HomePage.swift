@@ -26,7 +26,7 @@ struct HomePage: View {
                 }
                 .tag(1)
             
-            InvStatus()
+            InventoryStatusView()
                 .tabItem {
                     Image(systemName: "eye.circle.fill")
                     Text("View Inventory")

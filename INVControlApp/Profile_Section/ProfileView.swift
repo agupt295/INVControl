@@ -1,10 +1,8 @@
 import SwiftUI
-import MapKit
 
 struct ProfileView: View {
     
     @State private var showAlert = false
-    @State var location: String = "India"
     @StateObject private var viewModel = LoadCurrentUserModel()
     
     var body: some View {

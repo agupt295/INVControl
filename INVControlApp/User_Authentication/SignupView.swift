@@ -9,7 +9,7 @@ enum ActiveAlert: Identifiable {
 
 struct SignupView: View {
     
-    @StateObject private var viewModel = SignInEmailViewModel()
+    @StateObject private var viewModel = Authentication_ViewModel()
     @State var userName: String=""
     @State var email: String=""
     @State var password: String=""

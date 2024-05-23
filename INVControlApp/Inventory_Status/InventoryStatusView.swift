@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct InvStatus: View {
+struct InventoryStatusView: View {
     @StateObject private var profileViewModel = LoadCurrentUserModel()
     @State private var isProfileSheetPresented = false
     @State private var user: DBUser? = nil
