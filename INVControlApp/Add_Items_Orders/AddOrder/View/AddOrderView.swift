@@ -9,6 +9,7 @@ struct AddOrderView: View {
     @State private var isAddItemSheetPresented = false
     @State private var isProfileSheetPresented = false
     @State private var orderName: String = ""
+    @State private var category: String = ""
     @State private var user: DBUser? = nil
     @State private var isLoading = true
     @State private var isLoadingTwo = true
@@ -31,25 +32,26 @@ struct AddOrderView: View {
                     isLoading = false
                 }
             }
-            
         } else {
             NavigationView {
                 VStack {
                     List {
-                        ForEach(productArray.indices, id: \.self) { productIndex in
-                            ExpandableRow(title: productArray[productIndex].name) {
-                                ForEach(productArray[productIndex].requiredItemList.indices, id: \.self) { itemIndex in
-                                    let item = productArray[productIndex].requiredItemList[itemIndex]
-                                    Text("\(item.name): \(item.quantity)")
+                        ForEach(Dictionary(grouping: productArray, by: { $0.category }).keys.sorted(), id: \.self) { category in
+                            ExpandableRow(title: category) {
+                                ForEach(productArray.filter { $0.category == category }, id: \.id) { product in
+                                    ExpandableRow(title: product.name) {
+                                        ForEach(product.requiredItemList.indices, id: \.self) { itemIndex in
+                                            let item = product.requiredItemList[itemIndex]
+                                            Text("\(item.name): \(item.quantity)")
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                     .accentColor(.red)
-                    
                     .navigationTitle("Orders List")
                     .toolbar {
-                        
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(action: {
                                 isProfileSheetPresented.toggle()
@@ -57,7 +59,6 @@ struct AddOrderView: View {
                                 Image(systemName: "person.crop.circle.fill")
                             }
                         }
-                        
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
                                 isAddItemSheetPresented.toggle()
@@ -68,7 +69,6 @@ struct AddOrderView: View {
                     }
                 }
                 .accentColor(.red)
-                
                 .sheet(isPresented: $isAddItemSheetPresented) {
                     if isLoadingTwo {
                         VStack {
@@ -89,10 +89,12 @@ struct AddOrderView: View {
                     } else {
                         NavigationView {
                             Form {
-                                HStack{
+                                HStack {
                                     TextField("Order Name", text: $orderName)
                                 }
-                                
+                                HStack {
+                                    TextField("Category", text: $category)
+                                }
                                 Section(header: Text("Item Details")) {
                                     ForEach(itemsArrayCopy.indices, id: \.self) { itemIndex in
                                         HStack {
@@ -103,13 +105,11 @@ struct AddOrderView: View {
                                         }
                                     }
                                 }
-                                
                                 Button("Add Order") {
                                     Task {
                                         do {
-                                            self.user = try await viewModel.addProduct(user: self.user!, orderName: orderName, itemsArrayCopy: itemsArrayCopy)
+                                            self.user = try await viewModel.addProduct(user: self.user!, orderName: orderName, category: category, itemsArrayCopy: itemsArrayCopy)
                                             productArray = user!.productList
-                                            
                                         } catch {
                                             print(error)
                                         }
@@ -117,7 +117,6 @@ struct AddOrderView: View {
                                     isAddItemSheetPresented.toggle()
                                 }
                                 .foregroundColor(.red)
-                                
                                 .navigationTitle("Add New Order")
                                 .toolbar {
                                     ToolbarItem(placement: .navigationBarLeading) {
@@ -129,17 +128,10 @@ struct AddOrderView: View {
                                 }
                             }
                         }
-                        
-                        .sheet(isPresented: $isProfileSheetPresented) {
-                            Image(systemName: "person.crop.circle.fill")
-                                .font(.system(size: 100))
-                            
-                            ProfileView()
-                        }
                     }
                 }
             }
-            .task{
+            .task {
                 do {
                     self.user = try await profileViewModel.loadCurrentUser()
                 } catch {
