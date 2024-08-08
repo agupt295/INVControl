@@ -74,7 +74,7 @@ struct UpdateInvView: View {
                     
                     Spacer()
                 }
-                .navigationTitle("Make Orders")
+                .navigationTitle("Deduct from Inventory")
                 .sheet(isPresented: $isProfileSheetPresented) {
                     Image(systemName: "person.crop.circle.fill")
                         .font(.system(size: 100))

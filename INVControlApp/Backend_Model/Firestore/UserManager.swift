@@ -21,7 +21,7 @@ final class LoadCurrentUserModel: ObservableObject {
 struct Item: Codable, Identifiable, Hashable {
     var id = UUID() // for Identifiable
     var name: String
-    var quantity: Int
+    var quantity: Double
     
     var status: String {
         return quantity > 2 ? "🟢" : "🔴"

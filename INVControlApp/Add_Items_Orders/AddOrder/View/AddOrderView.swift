@@ -44,7 +44,7 @@ struct AddOrderView: View {
                                     ExpandableRow(title: product.name) {
                                         ForEach(product.requiredItemList.indices, id: \.self) { itemIndex in
                                             let item = product.requiredItemList[itemIndex]
-                                            Text("\(item.name): \(item.quantity)")
+                                            Text("\(item.name): \(String(format: "%.2f", item.quantity)) mL/gm")
                                         }
                                     }
                                 }
@@ -52,7 +52,7 @@ struct AddOrderView: View {
                         }
                     }
                     .accentColor(.red)
-                    .navigationTitle("Orders' Information")
+                    .navigationTitle("Products' Info")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(action: {
@@ -124,7 +124,7 @@ struct AddOrderView: View {
                                         }
                                     }
                                 }
-                                Button("Add Order") {
+                                Button("Add Product") {
                                     Task {
                                         do {
                                             let finalCategory = isAddingNewCategory ? category : selectedCategory

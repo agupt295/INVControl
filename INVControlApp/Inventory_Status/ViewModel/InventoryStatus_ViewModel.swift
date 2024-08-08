@@ -19,12 +19,10 @@ class InventoryStatus_Handler: ObservableObject {
 //
 //        return self.user!
 //    }
-    
-//    func addCategoryProductCount(user: DBUser,)
 }
 
 // Model to represent a Product Count within a Category
 struct CategoryProductCount: Codable, Hashable {
     let category: String
-    var productCounts: [String: Int] = [:] // Product name to count
+    var productCounts: [String: String] = [:] // Product name to count
 }

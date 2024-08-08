@@ -11,7 +11,7 @@ struct InventoryStatusView: View {
     @State private var isLoading = true
     @State private var selectedCategory: String? = nil
     @State private var selectedItem: String? = nil
-    @State private var itemQuantity: Int = 0
+    @State private var itemQuantity = ""
     @State private var categories: [String] = []
     
     var body: some View {
@@ -38,14 +38,14 @@ struct InventoryStatusView: View {
                                     HStack {
                                         Text(productName)
                                         Spacer()
-                                        Text("Count: \(categoryProductCount.productCounts[productName] ?? 0)")
+                                        Text("Count: \(categoryProductCount.productCounts[productName] ?? "0")")
                                     }
                                 }
                             }
                         }
                     }
                     .accentColor(.red)
-                    .navigationTitle("Inventory Status")
+                    .navigationTitle("Track Inventory")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(action: {
@@ -86,9 +86,8 @@ struct InventoryStatusView: View {
                             
                             // Conditionally show the Stepper and Save button if an item is selected
                             if selectedItem != nil {
-                                Stepper(value: $itemQuantity, in: 0...100) {
-                                    Text("Quantity: \(itemQuantity)")
-                                }
+                                TextField("Quantity", text: $itemQuantity)
+                                    .keyboardType(.decimalPad) // Ensure the keyboard shows number pad
                                 
                                 Button("Save") {
                                     if let selectedItem = selectedItem, let selectedCategory = selectedCategory {

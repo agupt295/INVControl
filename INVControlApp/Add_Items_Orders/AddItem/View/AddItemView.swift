@@ -7,7 +7,7 @@ struct AddItemView: View {
     @State private var isAddItemSheetPresented = false
     @State private var isProfileSheetPresented = false
     @State private var newItemName = ""
-    @State private var newItemQuantity = 0
+    @State private var newItemQuantity = ""
     @State private var user: DBUser? = nil
     @State private var isLoading = true
     
@@ -31,12 +31,12 @@ struct AddItemView: View {
                         ForEach(self.user!.itemList) { item in
                             HStack {
                                 Text("\(item.name)") .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                Text("Qty: \(item.quantity)") .frame(alignment: .trailing)
+                                Text("\(String(format: "%.2f", item.quantity)) mL/gm") .frame(alignment: .trailing)
                                 Spacer()
                             }
                         }
                     }
-                    .navigationTitle("Units' Availability")
+                    .navigationTitle("Track your sub-units")
                     .id(UUID())
                     .toolbar {
                         
@@ -62,16 +62,21 @@ struct AddItemView: View {
                         Form {
                             Section(header: Text("New Item Details")) {
                                 TextField("Item Name", text: $newItemName)
-                                Stepper(value: $newItemQuantity, in: 0...100) {
-                                    Text("Quantity: \(newItemQuantity)")
-                                }
+                                
+                                TextField("Quantity", text: $newItemQuantity)
+                                    .keyboardType(.numberPad) // Ensure the keyboard shows number pad
                             }
-                            Button("Add Item") {
+                            Button("Add sub-unit") {
                                 Task {
                                     do {
-                                        self.user = try await viewModel.addItem(user: self.user!, newItemName: newItemName, newItemQuantity: newItemQuantity)
-                                        newItemName = ""
-                                        newItemQuantity = 0
+                                        if let quantity = Double(newItemQuantity) {
+                                            self.user = try await viewModel.addItem(user: self.user!, newItemName: newItemName, newItemQuantity: quantity)
+                                            newItemName = ""
+                                            newItemQuantity = "0"
+                                        } else {
+                                            // Handle invalid quantity input
+                                            print("Invalid quantity entered")
+                                        }
                                     } catch {
                                         print(error)
                                     }

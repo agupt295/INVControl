@@ -12,7 +12,7 @@ class AddItem_Handler: ObservableObject {
         self.profileViewModel = LoadCurrentUserModel()
     }
     
-    func addItem(user: DBUser, newItemName: String, newItemQuantity: Int) async throws -> DBUser {
+    func addItem(user: DBUser, newItemName: String, newItemQuantity: Double) async throws -> DBUser {
         let newItem = Item(name: newItemName, quantity: newItemQuantity)
         try await viewModel.addItemList(userId: (user.userId)!, newItem: newItem)
         self.user = try await profileViewModel.loadCurrentUser()

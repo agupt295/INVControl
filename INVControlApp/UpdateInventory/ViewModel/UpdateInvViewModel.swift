@@ -43,7 +43,7 @@ class UpdateInv_Handler: ObservableObject {
                 
         for orderedItem in orderedProduct.requiredItemList {
             if let index = self.itemsListCopy.firstIndex(where: { $0.name == orderedItem.name }) {
-                self.itemsListCopy[index].quantity -= orderedItem.quantity * order.quantity
+                self.itemsListCopy[index].quantity -= orderedItem.quantity * Double(order.quantity)
                 // Ensure quantity doesn't go below zero
                 if self.itemsListCopy[index].quantity < 0 {
                     print("Item failed: ", self.itemsListCopy[index])

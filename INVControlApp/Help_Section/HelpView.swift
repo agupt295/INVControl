@@ -5,7 +5,7 @@ struct HelpView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Add Item")
+                Text("Add Sub-units")
                     .font(.title)
                     .foregroundColor(.red)
                 Text("You can add new Items in your Inventory")
@@ -13,7 +13,7 @@ struct HelpView: View {
             }
             
             VStack(alignment: .leading, spacing: 5) {
-                Text("Add Order")
+                Text("Add Products")
                     .font(.title)
                     .foregroundColor(.red)
                 Text("You can add a new Product that can be made of multiple Items with varying Quantity")
@@ -21,7 +21,7 @@ struct HelpView: View {
             }
             
             VStack(alignment: .leading, spacing: 5) {
-                Text("View Inventory")
+                Text("Inventory Status")
                     .font(.title)
                     .foregroundColor(.red)
                 Text("The Page will show you the quantity left in the Inventory with a Status Sign")
@@ -29,7 +29,7 @@ struct HelpView: View {
             }
             
             VStack(alignment: .leading, spacing: 5) {
-                Text("Orders")
+                Text("Deduct from Inventory")
                     .font(.title)
                     .foregroundColor(.red)
                 Text("You can add make Products with varying quantity and after placing order, the Items will be deducted from your Inventory automatically")
