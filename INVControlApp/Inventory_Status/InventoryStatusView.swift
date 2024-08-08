@@ -9,9 +9,8 @@ struct InventoryStatusView: View {
     @State private var isProfileSheetPresented = false
     @State private var user: DBUser? = nil
     @State private var isLoading = true
-    
     @State private var selectedCategory: String? = nil
-    @State private var selectedItem: Item? = nil
+    @State private var selectedItem: String? = nil
     @State private var itemQuantity: Int = 0
     @State private var categories: [String] = []
     
@@ -69,18 +68,18 @@ struct InventoryStatusView: View {
                         Form {
                             // Picker for Category with "None" as default
                             Picker("Select Category", selection: $selectedCategory) {
-                                Text("None").tag(nil as String?)
+                                Text("None").tag(String?.none) // Explicitly set "None" tag to nil
                                 ForEach(categories, id: \.self) { category in
                                     Text(category).tag(category as String?)
                                 }
                             }
                             
                             // Conditionally show the Item Picker if a category is selected
-                            if selectedCategory != nil {
+                            if let selectedCategory = selectedCategory {
                                 Picker("Select Item", selection: $selectedItem) {
-                                    Text("None").tag(nil as Item?)
-                                    ForEach(productList.filter { $0.category == selectedCategory }.flatMap { $0.requiredItemList }, id: \.id) { item in
-                                        Text(item.name).tag(item as Item?)
+                                    Text("None").tag(String?.none) // Explicitly set "None" tag to nil
+                                    ForEach(productList.filter { $0.category == selectedCategory }.map { $0.name }, id: \.self) { productName in
+                                        Text(productName).tag(productName as String?)
                                     }
                                 }
                             }
@@ -93,11 +92,10 @@ struct InventoryStatusView: View {
                                 
                                 Button("Save") {
                                     if let selectedItem = selectedItem, let selectedCategory = selectedCategory {
-                                        // Update the count in the categoryProductCounts array
                                         if let index = categoryProductCounts.firstIndex(where: { $0.category == selectedCategory }) {
-                                            categoryProductCounts[index].productCounts[selectedItem.name] = itemQuantity
+                                            categoryProductCounts[index].productCounts[selectedItem] = itemQuantity
                                         } else {
-                                            let newCategoryProductCount = CategoryProductCount(category: selectedCategory, productCounts: [selectedItem.name: itemQuantity])
+                                            let newCategoryProductCount = CategoryProductCount(category: selectedCategory, productCounts: [selectedItem: itemQuantity])
                                             categoryProductCounts.append(newCategoryProductCount)
                                         }
                                     }
@@ -122,6 +120,7 @@ struct InventoryStatusView: View {
                 do {
                     self.user = try await profileViewModel.loadCurrentUser()
                     productList = user!.productList
+                    categories = Array(Set(productList.map { $0.category }))
                 } catch {
                     print(error)
                 }
