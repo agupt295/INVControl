@@ -18,7 +18,7 @@ final class LoadCurrentUserModel: ObservableObject {
     }
 }
 
-struct Item: Codable, Identifiable {
+struct Item: Codable, Identifiable, Hashable {
     var id = UUID() // for Identifiable
     var name: String
     var quantity: Int
@@ -48,7 +48,7 @@ struct DBUser: Codable {
     let password: String?
     var itemList: [Item]
     var productList: [Product]
-    var product_count_List: [Product_with_Item_Count]
+    var product_count_List: [CategoryProductCount]
 }
 
 final class UserManager: ObservableObject {

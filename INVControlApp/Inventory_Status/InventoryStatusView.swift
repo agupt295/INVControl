@@ -3,8 +3,6 @@ import SwiftUI
 struct InventoryStatusView: View {
     @StateObject private var profileViewModel = LoadCurrentUserModel()
     @StateObject private var viewModel = InventoryStatus_Handler()
-    
-    @State private var product_count_Array: [Product_with_Item_Count] = []
     @State private var productList: [Product] = []
     @State private var categoryProductCounts: [CategoryProductCount] = []
     @State private var isAddItemSheetPresented = false
@@ -13,7 +11,7 @@ struct InventoryStatusView: View {
     @State private var isLoading = true
     
     @State private var selectedCategory: String? = nil
-    @State private var selectedItem: Item_Count? = nil
+    @State private var selectedItem: Item? = nil
     @State private var itemQuantity: Int = 0
     @State private var categories: [String] = []
     
@@ -26,10 +24,8 @@ struct InventoryStatusView: View {
             .onAppear {
                 Task {
                     self.user = try await profileViewModel.loadCurrentUser()
-                    product_count_Array = user!.product_count_List
                     productList = user!.productList
                     categories = Array(Set(productList.map { $0.category }))
-                    categoryProductCounts = getCategoryProductCounts(products: product_count_Array)
                     isLoading = false
                 }
             }
@@ -71,39 +67,44 @@ struct InventoryStatusView: View {
                 .sheet(isPresented: $isAddItemSheetPresented) {
                     NavigationView {
                         Form {
+                            // Picker for Category with "None" as default
                             Picker("Select Category", selection: $selectedCategory) {
+                                Text("None").tag(nil as String?)
                                 ForEach(categories, id: \.self) { category in
                                     Text(category).tag(category as String?)
                                 }
                             }
                             
-                            if let selectedCategory = selectedCategory {
+                            // Conditionally show the Item Picker if a category is selected
+                            if selectedCategory != nil {
                                 Picker("Select Item", selection: $selectedItem) {
+                                    Text("None").tag(nil as Item?)
                                     ForEach(productList.filter { $0.category == selectedCategory }.flatMap { $0.requiredItemList }, id: \.id) { item in
-                                        Text(item.name)
-                                    }
-                                }
-                                
-                                if let _ = selectedItem {
-                                    Stepper(value: $itemQuantity, in: 0...100) {
-                                        Text("Quantity: \(itemQuantity)")
+                                        Text(item.name).tag(item as Item?)
                                     }
                                 }
                             }
                             
-                            Button("Save") {
-                                if let selectedItem = selectedItem {
-                                    // Update the count in the categoryProductCounts array
-                                    if let index = categoryProductCounts.firstIndex(where: { $0.category == selectedCategory }) {
-                                        categoryProductCounts[index].productCounts[selectedItem.name] = itemQuantity
-                                    } else {
-                                        let newCategoryProductCount = CategoryProductCount(category: selectedCategory!, productCounts: [selectedItem.name: itemQuantity])
-                                        categoryProductCounts.append(newCategoryProductCount)
-                                    }
+                            // Conditionally show the Stepper and Save button if an item is selected
+                            if selectedItem != nil {
+                                Stepper(value: $itemQuantity, in: 0...100) {
+                                    Text("Quantity: \(itemQuantity)")
                                 }
-                                isAddItemSheetPresented.toggle()
+                                
+                                Button("Save") {
+                                    if let selectedItem = selectedItem, let selectedCategory = selectedCategory {
+                                        // Update the count in the categoryProductCounts array
+                                        if let index = categoryProductCounts.firstIndex(where: { $0.category == selectedCategory }) {
+                                            categoryProductCounts[index].productCounts[selectedItem.name] = itemQuantity
+                                        } else {
+                                            let newCategoryProductCount = CategoryProductCount(category: selectedCategory, productCounts: [selectedItem.name: itemQuantity])
+                                            categoryProductCounts.append(newCategoryProductCount)
+                                        }
+                                    }
+                                    isAddItemSheetPresented.toggle()
+                                }
+                                .foregroundColor(.red)
                             }
-                            .foregroundColor(.red)
                         }
                         .navigationTitle("Add Item")
                         .toolbar {

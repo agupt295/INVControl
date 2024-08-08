@@ -19,29 +19,29 @@ struct CategoryProductCount: Codable, Hashable {
     var productCounts: [String: Int] = [:] // Product name to count
 }
 
-struct Product_with_Item_Count: Codable, Identifiable, Hashable {
-    var id = UUID()
-    let name: String
-    let category: String
-    var requiredItemList: [Item_Count]
-}
-
-struct Item_Count: Codable, Identifiable, Hashable {
-    var id = UUID()
-    let name: String
-    var quantity: Int
-}
-
+//struct Product_with_Item_Count: Codable, Identifiable, Hashable {
+//    var id = UUID()
+//    let name: String
+//    let category: String
+//    var requiredItemList: [Item_Count]
+//}
+//
+//struct Item_Count: Codable, Identifiable, Hashable {
+//    var id = UUID()
+//    let name: String
+//    var quantity: Int
+//}
 // Function to get product counts grouped by category
-func getCategoryProductCounts(products: [Product_with_Item_Count]) -> [CategoryProductCount] {
-        var categoryCounts: [String: [String: Int]] = [:]
-        
-        for product in products {
-            if categoryCounts[product.category] == nil {
-                categoryCounts[product.category] = [:]
-            }
-            categoryCounts[product.category]?[product.name] = product.requiredItemList.reduce(0) { $0 + $1.quantity }
-        }
-        
-        return categoryCounts.map { CategoryProductCount(category: $0.key, productCounts: $0.value) }
-    }
+
+//func getCategoryProductCounts(products: [Product_with_Item_Count]) -> [CategoryProductCount] {
+//    var categoryCounts: [String: [String: Int]] = [:]
+//
+//    for product in products {
+//        if categoryCounts[product.category] == nil {
+//            categoryCounts[product.category] = [:]
+//        }
+//        categoryCounts[product.category]?[product.name] = product.requiredItemList.reduce(0) { $0 + $1.quantity }
+//    }
+//
+//    return categoryCounts.map { CategoryProductCount(category: $0.key, productCounts: $0.value) }
+//}
