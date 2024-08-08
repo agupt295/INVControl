@@ -48,6 +48,7 @@ struct DBUser: Codable {
     let password: String?
     var itemList: [Item]
     var productList: [Product]
+    var product_count_List: [Product_with_Item_Count]
 }
 
 final class UserManager: ObservableObject {

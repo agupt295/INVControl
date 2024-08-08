@@ -52,6 +52,7 @@
 		F078A31E2B07800500E6F258 /* UpdateInvView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F078A31D2B07800500E6F258 /* UpdateInvView.swift */; };
 		F07EEAA02BFDA7870046971F /* AddItem_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07EEA9F2BFDA7870046971F /* AddItem_ViewModel.swift */; };
 		F09B5EAF2B0C0139009392B5 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09B5EAE2B0C0139009392B5 /* UserManager.swift */; };
+		F0A91FFE2C6416E000878FD5 /* InventoryStatus_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A91FFD2C6416E000878FD5 /* InventoryStatus_ViewModel.swift */; };
 		F0C4A73E2BFDD92B0060FADD /* AddOrder_ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C4A73D2BFDD92B0060FADD /* AddOrder_ViewModel.swift */; };
 		F0D3B1D52BFEB51100023F84 /* UpdateInvViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D3B1D42BFEB51100023F84 /* UpdateInvViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 		F07EEA9F2BFDA7870046971F /* AddItem_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItem_ViewModel.swift; sourceTree = "<group>"; };
 		F09B5EAE2B0C0139009392B5 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		F0A3037E2B0F1CEE00D12067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0A91FFD2C6416E000878FD5 /* InventoryStatus_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryStatus_ViewModel.swift; sourceTree = "<group>"; };
 		F0C4A73D2BFDD92B0060FADD /* AddOrder_ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrder_ViewModel.swift; sourceTree = "<group>"; };
 		F0D3B1D42BFEB51100023F84 /* UpdateInvViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInvViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +221,8 @@
 		F078A3192B077C6500E6F258 /* Inventory_Status */ = {
 			isa = PBXGroup;
 			children = (
+				F0A91FFC2C6416A200878FD5 /* ViewModel */,
+				F0A91FFB2C64169D00878FD5 /* View */,
 				F078A31A2B077C8E00E6F258 /* InventoryStatusView.swift */,
 			);
 			path = Inventory_Status;
@@ -289,6 +293,21 @@
 				F09B5EAE2B0C0139009392B5 /* UserManager.swift */,
 			);
 			path = Firestore;
+			sourceTree = "<group>";
+		};
+		F0A91FFB2C64169D00878FD5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F0A91FFC2C6416A200878FD5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F0A91FFD2C6416E000878FD5 /* InventoryStatus_ViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		F0D3B1D22BFEB44C00023F84 /* View */ = {
@@ -417,6 +436,7 @@
 				E04834AC2B02E6660047C39F /* HomePage.swift in Sources */,
 				F09B5EAF2B0C0139009392B5 /* UserManager.swift in Sources */,
 				F078A3162B07702E00E6F258 /* AddItemView.swift in Sources */,
+				F0A91FFE2C6416E000878FD5 /* InventoryStatus_ViewModel.swift in Sources */,
 				F078A31B2B077C8E00E6F258 /* InventoryStatusView.swift in Sources */,
 				E0769AFE2AE6DF2600B08067 /* LoginView.swift in Sources */,
 				F00B01582BFF2C8E00B01CC1 /* Authentication_ViewModel.swift in Sources */,

@@ -36,7 +36,7 @@ struct AddItemView: View {
                             }
                         }
                     }
-                    .navigationTitle("Items List")
+                    .navigationTitle("Units' Availability")
                     .id(UUID())
                     .toolbar {
                         
