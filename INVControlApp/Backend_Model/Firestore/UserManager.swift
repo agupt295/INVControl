@@ -48,7 +48,7 @@ struct DBUser: Codable {
     let password: String?
     var itemList: [Item]
     var productList: [Product]
-    var product_count_List: [CategoryProductCount]
+    var manufactured_product_List: [CategoryProductCount]
 }
 
 final class UserManager: ObservableObject {
@@ -83,6 +83,19 @@ final class UserManager: ObservableObject {
     func setUpdateditemsArray(userId: String, newItemsList: [Item]) async throws {
         var user = try await getUser(userId: userId)
         user.itemList = newItemsList
+        try userDocument(userId: userId).setData(from: user)
+    }
+    
+    func addManufacturedProducts(userId: String, manufacturedSet: CategoryProductCount) async throws {
+        var user = try await getUser(userId: userId)
+        user.manufactured_product_List.append(manufacturedSet)
+        try userDocument(userId: userId).setData(from: user)
+    }
+    
+    func setManufacturedProducts(userId: String, index: Int, item: String, updatedQuantity: String) async throws {
+        var user = try await getUser(userId: userId)
+//      categoryProductCounts[index].productCounts[selectedItem] = itemQuantity
+        user.manufactured_product_List[index].productCounts[item] = updatedQuantity
         try userDocument(userId: userId).setData(from: user)
     }
 }

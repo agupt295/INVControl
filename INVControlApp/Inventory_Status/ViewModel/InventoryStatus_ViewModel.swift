@@ -12,13 +12,22 @@ class InventoryStatus_Handler: ObservableObject {
         self.profileViewModel = LoadCurrentUserModel()
     }
     
-//    func addItem(user: DBUser, newItemName: String, newItemQuantity: Int) async throws -> DBUser {
-//        let newItem = Item(name: newItemName, quantity: newItemQuantity)
-//        try await viewModel.addItemList(userId: (user.userId)!, newItem: newItem)
-//        self.user = try await profileViewModel.loadCurrentUser()
-//
-//        return self.user!
-//    }
+    func addManufacturedProduct(user: DBUser, category: String, productList: [String: String]) async throws -> DBUser {
+        let newManufacturedProduct = CategoryProductCount(category: category, productCounts: productList)
+        try await viewModel.addManufacturedProducts(userId: (user.userId)!, manufacturedSet: newManufacturedProduct)
+        self.user = try await profileViewModel.loadCurrentUser()
+        return self.user!
+    }
+    
+    func setManufacturedProduct(user: DBUser, index: Int, item: String, updatedQuantity: String) async throws -> DBUser {
+//        if(index == -1) { // adding new product
+////            let newManufacturedProduct = CategoryProductCount(category: category, productCounts: productList)
+//            
+//        }
+        try await viewModel.setManufacturedProducts(userId: (user.userId)!, index: index, item: item, updatedQuantity: updatedQuantity)
+        self.user = try await profileViewModel.loadCurrentUser()
+        return self.user!
+    }
 }
 
 // Model to represent a Product Count within a Category

@@ -32,7 +32,7 @@ struct InventoryStatusView: View {
             NavigationView {
                 VStack {
                     List {
-                        ForEach(categoryProductCounts, id: \.category) { categoryProductCount in
+                        ForEach(self.user!.manufactured_product_List, id: \.category) { categoryProductCount in
                             ExpandableRow(title: categoryProductCount.category) {
                                 ForEach(categoryProductCount.productCounts.keys.sorted(), id: \.self) { productName in
                                     HStack {
@@ -84,21 +84,28 @@ struct InventoryStatusView: View {
                                 }
                             }
                             
-                            // Conditionally show the Stepper and Save button if an item is selected
                             if selectedItem != nil {
                                 TextField("Quantity", text: $itemQuantity)
-                                    .keyboardType(.decimalPad) // Ensure the keyboard shows number pad
+                                    .keyboardType(.numberPad) // Ensure the keyboard shows number pad
                                 
                                 Button("Save") {
-                                    if let selectedItem = selectedItem, let selectedCategory = selectedCategory {
-                                        if let index = categoryProductCounts.firstIndex(where: { $0.category == selectedCategory }) {
-                                            categoryProductCounts[index].productCounts[selectedItem] = itemQuantity
-                                        } else {
-                                            let newCategoryProductCount = CategoryProductCount(category: selectedCategory, productCounts: [selectedItem: itemQuantity])
-                                            categoryProductCounts.append(newCategoryProductCount)
+                                    Task {
+                                        do {
+                                            if let selectedItem = selectedItem, let selectedCategory = selectedCategory {
+                                                if let index = self.user!.manufactured_product_List.firstIndex(where: { $0.category == selectedCategory }) {
+//                                                    self.user = try await viewModel.setManufacturedProduct(user: self.user!, index: index, item: selectedItem, updatedQuantity: itemQuantity)
+                                                } else {
+                                                    let newCategoryProductCount = CategoryProductCount(category: selectedCategory, productCounts: [selectedItem: itemQuantity])
+//                                                    categoryProductCounts.append(newCategoryProductCount)
+                                                    
+                                                    self.user = try await viewModel.addManufacturedProduct(user: self.user!, category: selectedCategory, productList: [selectedItem: itemQuantity])
+                                                }
+                                            }
+                                            isAddItemSheetPresented.toggle()
+                                        } catch {
+                                            print(error)
                                         }
                                     }
-                                    isAddItemSheetPresented.toggle()
                                 }
                                 .foregroundColor(.red)
                             }

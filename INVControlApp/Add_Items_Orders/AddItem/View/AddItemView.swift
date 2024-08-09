@@ -64,7 +64,7 @@ struct AddItemView: View {
                                 TextField("Item Name", text: $newItemName)
                                 
                                 TextField("Quantity", text: $newItemQuantity)
-                                    .keyboardType(.numberPad) // Ensure the keyboard shows number pad
+                                    .keyboardType(.decimalPad) // Ensure the keyboard shows number pad
                             }
                             Button("Add sub-unit") {
                                 Task {

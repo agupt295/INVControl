@@ -35,7 +35,7 @@ struct HomePage: View {
             
             UpdateInvView()
                 .tabItem {
-                    Image(systemName: "minus.diamond.fillperson.crop.circle")
+                    Image(systemName: "minus.diamond.fill")
                     Text("Orders")
                 }
                 .tag(3)
