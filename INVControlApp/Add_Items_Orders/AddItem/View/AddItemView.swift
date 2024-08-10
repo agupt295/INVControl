@@ -65,6 +65,16 @@ struct AddItemView: View {
                                 
                                 TextField("Quantity", text: $newItemQuantity)
                                     .keyboardType(.decimalPad) // Ensure the keyboard shows number pad
+                                
+                                VStack {
+                                    Text("Enter quantity in gm/mL!")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text("For example: if the quantity is 1L, enter 1000. (in mL)")
+                                        .italic()
+                                        .font(.footnote)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                                
                             }
                             Button("Add sub-unit") {
                                 Task {
@@ -112,4 +122,8 @@ struct AddItemView: View {
             }
         }
     }
+}
+
+#Preview {
+    AddItemView()
 }
