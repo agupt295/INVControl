@@ -18,10 +18,16 @@ final class LoadCurrentUserModel: ObservableObject {
     }
 }
 
+enum ItemType: String, Codable {
+    case liquidOrPowder
+    case solids
+}
+
 struct Item: Codable, Identifiable, Hashable {
     var id = UUID() // for Identifiable
     var name: String
     var quantity: Double
+    var type: ItemType
     
     var status: String {
         return quantity > 2 ? "🟢" : "🔴"

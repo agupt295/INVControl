@@ -28,7 +28,7 @@ struct AddOrderView: View {
                     productArray = user!.productList
                     
                     itemsArrayCopy = user!.itemList.map { item in
-                        return Item(name: item.name, quantity: 0)
+                        return Item(name: item.name, quantity: 0, type: item.type)
                     }
                     
                     isLoading = false
@@ -44,7 +44,9 @@ struct AddOrderView: View {
                                     ExpandableRow(title: product.name) {
                                         ForEach(product.requiredItemList.indices, id: \.self) { itemIndex in
                                             let item = product.requiredItemList[itemIndex]
-                                            Text("\(item.name): \(String(format: "%.2f", item.quantity)) mL/gm")
+//                                            Text("\(item.name): \(String(format: "%.2f", item.quantity)) mL/gm")
+                                                Text("\(item.name): \(String(format: "%.2f", item.quantity)) \(item.type == .solids ? " units" : " mL/gm")")
+
                                         }
                                     }
                                 }
@@ -52,7 +54,7 @@ struct AddOrderView: View {
                         }
                     }
                     .accentColor(.red)
-                    .navigationTitle("Products' Info")
+                    .navigationTitle("View your products")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(action: {
@@ -82,7 +84,7 @@ struct AddOrderView: View {
                                 self.user = try await profileViewModel.loadCurrentUser()
                                 
                                 itemsArrayCopy = user!.itemList.map { item in
-                                    return Item(name: item.name, quantity: 0)
+                                    return Item(name: item.name, quantity: 0, type: item.type)
                                 }
                                 
                                 isLoadingTwo = false
@@ -137,7 +139,7 @@ struct AddOrderView: View {
                                     isAddItemSheetPresented.toggle()
                                 }
                                 .foregroundColor(.red)
-                                .navigationTitle("Add New Order")
+                                .navigationTitle("Add New Product")
                                 .toolbar {
                                     ToolbarItem(placement: .navigationBarLeading) {
                                         Button("Cancel") {

@@ -11,6 +11,7 @@ struct AddItemView: View {
     @State private var user: DBUser? = nil
     @State private var isLoading = true
     @State private var searchText = ""
+    @State private var selectedType: ItemType = .liquidOrPowder
     
     var filteredItems: [Item] {
         if searchText.isEmpty {
@@ -41,7 +42,7 @@ struct AddItemView: View {
                             HStack {
                                 Text("\(item.name)")
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                Text("\(String(format: "%.2f", item.quantity)) mL/gm")
+                                Text("\(String(format: "%.2f", item.quantity)) \(item.type == .solids ? " units" : " mL/gm")")
                                     .frame(alignment: .trailing)
                                 Spacer()
                             }
@@ -72,28 +73,43 @@ struct AddItemView: View {
                     NavigationView {
                         Form {
                             Section(header: Text("New Item Details")) {
+                                
+                                Picker("Type", selection: $selectedType) {
+                                    Text("Liquid/Powder").tag(ItemType.liquidOrPowder)
+                                    Text("Solids").tag(ItemType.solids)
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                                
                                 TextField("Item Name", text: $newItemName)
                                 
                                 TextField("Quantity", text: $newItemQuantity)
-                                    .keyboardType(.decimalPad)
+                                    .keyboardType(selectedType == .liquidOrPowder ? .decimalPad : .numberPad)
                                 
                                 VStack {
-                                    Text("Enter quantity in gm/mL!")
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    Text("For example: if the quantity is 1L, enter 1000. (in mL)")
-                                        .italic()
-                                        .font(.footnote)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    if selectedType == .liquidOrPowder {
+                                        Text("Enter quantity in mL/gm!").frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("For example: if the quantity is 1L, enter 1000. (in mL)")
+                                            .italic()
+                                            .font(.footnote)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    } else {
+                                        Text("Enter quantity in units!").frame(maxWidth: .infinity, alignment: .leading)
+                                        Text("For example: if the quantity is 10, enter 10. (in units)")
+                                            .italic()
+                                            .font(.footnote)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
                                 }
-                                
                             }
+                            
                             Button("Add sub-unit") {
                                 Task {
                                     do {
                                         if let quantity = Double(newItemQuantity) {
-                                            self.user = try await viewModel.addItem(user: self.user!, newItemName: newItemName, newItemQuantity: quantity)
+                                            if newItemName.isEmpty { newItemName = "New Item" }
+                                            self.user = try await viewModel.addItem(user: self.user!, newItemName: newItemName, newItemQuantity: quantity, itemType: selectedType)
                                             newItemName = ""
-                                            newItemQuantity = "0"
+                                            newItemQuantity = ""
                                         } else {
                                             print("Invalid quantity entered")
                                         }
@@ -116,6 +132,7 @@ struct AddItemView: View {
                         }
                     }
                 }
+                    
                 .sheet(isPresented: $isProfileSheetPresented) {
                     Image(systemName: "person.crop.circle.fill")
                         .font(.system(size: 100))
