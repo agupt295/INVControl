@@ -44,9 +44,7 @@ struct AddOrderView: View {
                                     ExpandableRow(title: product.name) {
                                         ForEach(product.requiredItemList.indices, id: \.self) { itemIndex in
                                             let item = product.requiredItemList[itemIndex]
-//                                            Text("\(item.name): \(String(format: "%.2f", item.quantity)) mL/gm")
-                                                Text("\(item.name): \(String(format: "%.2f", item.quantity)) \(item.type == .solids ? " units" : " mL/gm")")
-
+                                            Text("\(item.name): \(String(format: "%.2f", item.quantity)) \(item.type == .solids ? " units" : " mL/gm")")
                                         }
                                     }
                                 }
@@ -86,7 +84,6 @@ struct AddOrderView: View {
                                 itemsArrayCopy = user!.itemList.map { item in
                                     return Item(name: item.name, quantity: 0, type: item.type)
                                 }
-                                
                                 isLoadingTwo = false
                             }
                         }
@@ -116,16 +113,7 @@ struct AddOrderView: View {
                                         }
                                     }
                                 }
-                                Section(header: Text("Item Details")) {
-                                    ForEach(itemsArrayCopy.indices, id: \.self) { itemIndex in
-                                        HStack {
-                                            Text("\(itemsArrayCopy[itemIndex].name)")
-                                            Stepper(value: $itemsArrayCopy[itemIndex].quantity, in: 0...100) {
-                                                Text("Qty: \(itemsArrayCopy[itemIndex].quantity)")
-                                            }
-                                        }
-                                    }
-                                }
+                                ItemDetailsView(itemsArrayCopy: $itemsArrayCopy)
                                 Button("Add Product") {
                                     Task {
                                         do {
@@ -156,29 +144,124 @@ struct AddOrderView: View {
             .task {
                 do {
                     self.user = try await profileViewModel.loadCurrentUser()
+                    itemsArrayCopy = user!.itemList.map { item in
+                        return Item(name: item.name, quantity: 0, type: item.type)
+                    }
                 } catch {
                     print(error)
                 }
             }
         }
     }
+}
+
+struct ItemDetailsView: View {
+    @Binding var itemsArrayCopy: [Item]
     
-    struct ExpandableRow<Content: View>: View {
-        var title: String
-        @State private var isExpanded: Bool = false
-        var content: () -> Content
-        
-        var body: some View {
-            DisclosureGroup(
-                isExpanded: $isExpanded,
-                content: {
-                    content()
-                },
-                label: {
-                    Text(title)
+    var body: some View {
+        Section(header: Text("Item Details")) {
+            ForEach(itemsArrayCopy.indices, id: \.self) { itemIndex in
+                let item = itemsArrayCopy[itemIndex]
+                
+                HStack {
+                    Text("\(item.name)")
+                    
+                    if item.type == .solids {
+                        SolidsInputView(quantity: $itemsArrayCopy[itemIndex].quantity)
+                    } else if item.type == .liquidOrPowder {
+                        LiquidOrPowderInputView(quantity: $itemsArrayCopy[itemIndex].quantity)
+                    }
                 }
-            )
-            .accentColor(Color(.red))
+            }
         }
+    }
+}
+
+struct SolidsInputView: View {
+    @Binding var quantity: Double
+    var body: some View {
+        VStack {
+            HStack {
+                Button(action: {
+                    if quantity > 0 {
+                        quantity -= 1
+                    }
+                }) {
+                    Image(systemName: "minus.circle.fill")
+                        .foregroundColor(.blue)
+                        .font(.title2)
+                }
+                .buttonStyle(PlainButtonStyle()) // Ensure the button works as expected
+                
+                Slider(value: $quantity, in: 0...100, step: 1)
+                
+                Button(action: {
+                    if quantity < 100 {
+                        quantity += 1
+                    }
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.blue)
+                        .font(.title2)
+                }
+                .buttonStyle(PlainButtonStyle()) // Ensure the button works as expected
+            }
+            Text("Quantity: \(Int(quantity)) units")
+                .font(.footnote)
+                .padding(.top, 5)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+}
+
+struct LiquidOrPowderInputView: View {
+    @Binding var quantity: Double
+    @State private var showTextField = false
+    @State private var quantityString: String = ""
+
+    var body: some View {
+        VStack {
+            Button(action: {
+                showTextField.toggle()
+                if showTextField {
+                    quantityString = String(quantity)
+                }
+            }) {
+                Text(showTextField ? "Hide Input" : "Enter Quantity")
+                    .foregroundColor(.blue)
+            }
+            
+            if showTextField {
+                TextField("Enter quantity in mL/gm", text: $quantityString)
+                    .keyboardType(.decimalPad)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.top, 10)
+                    .onChange(of: quantityString) { newValue in
+                        if let doubleValue = Double(newValue) {
+                            quantity = doubleValue
+                        }
+                    }
+            }
+        }
+    }
+}
+
+
+struct ExpandableRow<Content: View>: View {
+    var title: String
+    @State private var isExpanded: Bool = false
+    var content: () -> Content
+    
+    var body: some View {
+        DisclosureGroup(
+            isExpanded: $isExpanded,
+            content: {
+                content()
+            },
+            label: {
+                Text(title)
+            }
+        )
+        .accentColor(Color(.red))
     }
 }
