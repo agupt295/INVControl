@@ -10,6 +10,15 @@ struct AddItemView: View {
     @State private var newItemQuantity = ""
     @State private var user: DBUser? = nil
     @State private var isLoading = true
+    @State private var searchText = ""
+    
+    var filteredItems: [Item] {
+        if searchText.isEmpty {
+            return self.user?.itemList ?? []
+        } else {
+            return self.user?.itemList.filter { $0.name.lowercased().contains(searchText.lowercased()) } ?? []
+        }
+    }
     
     var body: some View {
         if isLoading {
@@ -28,16 +37,18 @@ struct AddItemView: View {
             NavigationView {
                 VStack {
                     List {
-                        ForEach(self.user!.itemList) { item in
+                        ForEach(filteredItems) { item in
                             HStack {
-                                Text("\(item.name)") .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                Text("\(String(format: "%.2f", item.quantity)) mL/gm") .frame(alignment: .trailing)
+                                Text("\(item.name)")
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                Text("\(String(format: "%.2f", item.quantity)) mL/gm")
+                                    .frame(alignment: .trailing)
                                 Spacer()
                             }
                         }
                     }
                     .navigationTitle("Track your sub-units")
-                    .id(UUID())
+                    .searchable(text: $searchText) // Add search bar
                     .toolbar {
                         
                         ToolbarItem(placement: .navigationBarLeading) {
@@ -64,7 +75,7 @@ struct AddItemView: View {
                                 TextField("Item Name", text: $newItemName)
                                 
                                 TextField("Quantity", text: $newItemQuantity)
-                                    .keyboardType(.decimalPad) // Ensure the keyboard shows number pad
+                                    .keyboardType(.decimalPad)
                                 
                                 VStack {
                                     Text("Enter quantity in gm/mL!")
@@ -84,7 +95,6 @@ struct AddItemView: View {
                                             newItemName = ""
                                             newItemQuantity = "0"
                                         } else {
-                                            // Handle invalid quantity input
                                             print("Invalid quantity entered")
                                         }
                                     } catch {
@@ -122,8 +132,4 @@ struct AddItemView: View {
             }
         }
     }
-}
-
-#Preview {
-    AddItemView()
 }
