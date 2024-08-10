@@ -12,8 +12,8 @@ class AddOrder_Handler: ObservableObject {
         self.profileViewModel = LoadCurrentUserModel()
     }
     
-    func addProduct(user: DBUser, orderName: String, itemsArrayCopy: [Item]) async throws -> DBUser {
-        let newProduct = Product(name: orderName, requiredItemList: itemsArrayCopy.filter { $0.quantity > 0 })
+    func addProduct(user: DBUser, orderName: String, category: String, itemsArrayCopy: [Item]) async throws -> DBUser {
+        let newProduct = Product(name: orderName, requiredItemList: itemsArrayCopy.filter { $0.quantity > 0 }, category: category)
         try await viewModel.addProductList(userId: (user.userId)!, newProduct: newProduct)
         self.user = try await profileViewModel.loadCurrentUser()
         

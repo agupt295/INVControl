@@ -9,9 +9,12 @@ struct AddOrderView: View {
     @State private var isAddItemSheetPresented = false
     @State private var isProfileSheetPresented = false
     @State private var orderName: String = ""
+    @State private var category: String = ""
+    @State private var selectedCategory: String = ""
     @State private var user: DBUser? = nil
     @State private var isLoading = true
     @State private var isLoadingTwo = true
+    @State private var isAddingNewCategory = false
     
     var body: some View {
         if isLoading {
@@ -31,25 +34,26 @@ struct AddOrderView: View {
                     isLoading = false
                 }
             }
-            
         } else {
             NavigationView {
                 VStack {
                     List {
-                        ForEach(productArray.indices, id: \.self) { productIndex in
-                            ExpandableRow(title: productArray[productIndex].name) {
-                                ForEach(productArray[productIndex].requiredItemList.indices, id: \.self) { itemIndex in
-                                    let item = productArray[productIndex].requiredItemList[itemIndex]
-                                    Text("\(item.name): \(item.quantity)")
+                        ForEach(Dictionary(grouping: productArray, by: { $0.category }).keys.sorted(), id: \.self) { category in
+                            ExpandableRow(title: category) {
+                                ForEach(productArray.filter { $0.category == category }, id: \.id) { product in
+                                    ExpandableRow(title: product.name) {
+                                        ForEach(product.requiredItemList.indices, id: \.self) { itemIndex in
+                                            let item = product.requiredItemList[itemIndex]
+                                            Text("\(item.name): \(String(format: "%.2f", item.quantity)) mL/gm")
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                     .accentColor(.red)
-                    
-                    .navigationTitle("Orders List")
+                    .navigationTitle("Products' Info")
                     .toolbar {
-                        
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(action: {
                                 isProfileSheetPresented.toggle()
@@ -57,7 +61,6 @@ struct AddOrderView: View {
                                 Image(systemName: "person.crop.circle.fill")
                             }
                         }
-                        
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
                                 isAddItemSheetPresented.toggle()
@@ -68,7 +71,6 @@ struct AddOrderView: View {
                     }
                 }
                 .accentColor(.red)
-                
                 .sheet(isPresented: $isAddItemSheetPresented) {
                     if isLoadingTwo {
                         VStack {
@@ -89,10 +91,29 @@ struct AddOrderView: View {
                     } else {
                         NavigationView {
                             Form {
-                                HStack{
+                                HStack {
                                     TextField("Order Name", text: $orderName)
                                 }
-                                
+                                Section(header: Text("Category")) {
+                                    if isAddingNewCategory {
+                                        TextField("New Category", text: $category)
+                                        Button("Select Existing Category") {
+                                            isAddingNewCategory.toggle()
+                                        }
+                                    } else {
+                                        Picker("Select Category", selection: $selectedCategory) {
+                                            Text("New Category").tag("New Category")
+                                            ForEach(Array(Set(productArray.map { $0.category })), id: \.self) { category in
+                                                Text(category).tag(category)
+                                            }
+                                        }
+                                        .pickerStyle(MenuPickerStyle())
+                                        Button("Add New Category") {
+                                            isAddingNewCategory.toggle()
+                                            selectedCategory = ""
+                                        }
+                                    }
+                                }
                                 Section(header: Text("Item Details")) {
                                     ForEach(itemsArrayCopy.indices, id: \.self) { itemIndex in
                                         HStack {
@@ -103,13 +124,12 @@ struct AddOrderView: View {
                                         }
                                     }
                                 }
-                                
-                                Button("Add Order") {
+                                Button("Add Product") {
                                     Task {
                                         do {
-                                            self.user = try await viewModel.addProduct(user: self.user!, orderName: orderName, itemsArrayCopy: itemsArrayCopy)
+                                            let finalCategory = isAddingNewCategory ? category : selectedCategory
+                                            self.user = try await viewModel.addProduct(user: self.user!, orderName: orderName, category: finalCategory, itemsArrayCopy: itemsArrayCopy)
                                             productArray = user!.productList
-                                            
                                         } catch {
                                             print(error)
                                         }
@@ -117,7 +137,6 @@ struct AddOrderView: View {
                                     isAddItemSheetPresented.toggle()
                                 }
                                 .foregroundColor(.red)
-                                
                                 .navigationTitle("Add New Order")
                                 .toolbar {
                                     ToolbarItem(placement: .navigationBarLeading) {
@@ -129,17 +148,10 @@ struct AddOrderView: View {
                                 }
                             }
                         }
-                        
-                        .sheet(isPresented: $isProfileSheetPresented) {
-                            Image(systemName: "person.crop.circle.fill")
-                                .font(.system(size: 100))
-                            
-                            ProfileView()
-                        }
                     }
                 }
             }
-            .task{
+            .task {
                 do {
                     self.user = try await profileViewModel.loadCurrentUser()
                 } catch {

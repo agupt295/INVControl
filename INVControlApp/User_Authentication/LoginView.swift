@@ -3,8 +3,8 @@ import SwiftUI
 struct LoginView: View {
     
     @StateObject private var viewModel = Authentication_ViewModel()
-    @State var email: String=""
-    @State var password: String=""
+    @State var email: String="aryan@gmail.com"
+    @State var password: String="Aryan123"
     @State var isLoginSuccessful: Bool = false
     
     var body: some View {

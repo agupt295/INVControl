@@ -2,7 +2,7 @@ import SwiftUI
 import Combine
 
 class ItemsArraySharedData: ObservableObject {
-    @Published var selectedTab = 0 // Keep track of the selected tab
+    @Published var selectedTab = 0
 }
 
 struct HomePage: View {
@@ -15,27 +15,27 @@ struct HomePage: View {
             AddItemView()
                 .tabItem {
                     Image(systemName: "plus.circle.fill")
-                    Text("Add Item")
+                    Text("Sub-units")
                 }
                 .tag(0) // Tag to identify the view
             
             AddOrderView()
                 .tabItem {
-                    Image(systemName: "takeoutbag.and.cup.and.straw.fill")
-                    Text("Add Order")
+                    Image(systemName: "filemenu.and.selection")
+                    Text("Products")
                 }
                 .tag(1)
             
             InventoryStatusView()
                 .tabItem {
-                    Image(systemName: "eye.circle.fill")
-                    Text("View Inventory")
+                    Image(systemName: "cube.box.fill")
+                    Text("Inventory")
                 }
                 .tag(2)
             
             UpdateInvView()
                 .tabItem {
-                    Image(systemName: "fork.knife.circle.fill")
+                    Image(systemName: "minus.diamond.fill")
                     Text("Orders")
                 }
                 .tag(3)
