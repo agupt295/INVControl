@@ -133,6 +133,14 @@ struct AddOrderView: View {
                                                 let finalCategory = isAddingNewCategory ? category : selectedCategory
                                                 self.user = try await viewModel.addProduct(user: self.user!, orderName: orderName, category: finalCategory, itemsArrayCopy: itemsArrayCopy)
                                                 productArray = user!.productList
+                                                // Reset the entries after successfully adding the product
+                                                orderName = ""
+                                                category = ""
+                                                selectedCategory = ""
+                                                isAddingNewCategory = false
+                                                itemsArrayCopy = user!.itemList.map { item in
+                                                    return Item(name: item.name, quantity: 0, type: item.type)
+                                                }
                                             } catch {
                                                 print(error)
                                             }
@@ -201,38 +209,57 @@ struct ItemDetailsView: View {
 }
 
 struct SolidsInputView: View {
+//    @Binding var quantity: Double
+//    var body: some View {
+//        VStack {
+//            HStack {
+//                Button(action: {
+//                    if quantity > 0 {
+//                        quantity -= 1
+//                    }
+//                }) {
+//                    Image(systemName: "minus.circle.fill")
+//                        .foregroundColor(.blue)
+//                        .font(.title2)
+//                }
+//                .buttonStyle(PlainButtonStyle()) // Ensure the button works as expected
+//                
+//                Slider(value: $quantity, in: 0...100, step: 1)
+//                
+//                Button(action: {
+//                    if quantity < 100 {
+//                        quantity += 1
+//                    }
+//                }) {
+//                    Image(systemName: "plus.circle.fill")
+//                        .foregroundColor(.blue)
+//                        .font(.title2)
+//                }
+//                .buttonStyle(PlainButtonStyle()) // Ensure the button works as expected
+//            }
+//            Text("Quantity: \(Int(quantity)) units")
+//                .font(.footnote)
+//                .padding(.top, 5)
+//                .frame(maxWidth: .infinity, alignment: .leading)
+//        }
+//    }
     @Binding var quantity: Double
+    @State private var showTextField = false
+    @State private var quantityString: String = ""
+
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    if quantity > 0 {
-                        quantity -= 1
+        HStack {
+            Spacer() // Pushes the Button to the right
+            TextField("Enter quantity in units", text: $quantityString)
+                .keyboardType(.numberPad)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(maxWidth: 100) // Adjust the width as needed
+                .onChange(of: quantityString) { newValue in
+                    if let doubleValue = Double(newValue) {
+                        quantity = doubleValue
                     }
-                }) {
-                    Image(systemName: "minus.circle.fill")
-                        .foregroundColor(.blue)
-                        .font(.title2)
                 }
-                .buttonStyle(PlainButtonStyle()) // Ensure the button works as expected
-                
-                Slider(value: $quantity, in: 0...100, step: 1)
-                
-                Button(action: {
-                    if quantity < 100 {
-                        quantity += 1
-                    }
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundColor(.blue)
-                        .font(.title2)
-                }
-                .buttonStyle(PlainButtonStyle()) // Ensure the button works as expected
-            }
-            Text("Quantity: \(Int(quantity)) units")
-                .font(.footnote)
-                .padding(.top, 5)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            Text("units").font(.footnote)
         }
     }
 }
@@ -245,28 +272,38 @@ struct LiquidOrPowderInputView: View {
     var body: some View {
         HStack {
             Spacer() // Pushes the Button to the right
-            if !showTextField {
-                Button(action: {
-                    showTextField = true
-                    quantityString = String(quantity)
-                }) {
-                    Text("Enter Quantity")
-                        .foregroundColor(.blue)
-                }
-            }
-            
-            if showTextField {
-                TextField("Enter quantity in mL/gm", text: $quantityString)
-                    .keyboardType(.decimalPad)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(maxWidth: 100) // Adjust the width as needed
-                    .onChange(of: quantityString) { newValue in
-                        if let doubleValue = Double(newValue) {
-                            quantity = doubleValue
-                        }
+//            if !showTextField {
+//                Button(action: {
+//                    showTextField = true
+//                    quantityString = String(quantity)
+//                }) {
+//                    Text("Enter Quantity")
+//                        .foregroundColor(.blue)
+//                }
+//            }
+//            
+//            if showTextField {
+//                TextField("Enter quantity in mL/gm", text: $quantityString)
+//                    .keyboardType(.decimalPad)
+//                    .textFieldStyle(RoundedBorderTextFieldStyle())
+//                    .frame(maxWidth: 100) // Adjust the width as needed
+//                    .onChange(of: quantityString) { newValue in
+//                        if let doubleValue = Double(newValue) {
+//                            quantity = doubleValue
+//                        }
+//                    }
+//                Text("mL/gm").font(.footnote)
+//            }
+            TextField("Enter quantity in mL/gm", text: $quantityString)
+                .keyboardType(.decimalPad)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(maxWidth: 100) // Adjust the width as needed
+                .onChange(of: quantityString) { newValue in
+                    if let doubleValue = Double(newValue) {
+                        quantity = doubleValue
                     }
-                Text("mL/gm").font(.footnote)
-            }
+                }
+            Text("mL/gm").font(.footnote)
         }
     }
 }
