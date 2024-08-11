@@ -12,8 +12,6 @@ struct AddItemView: View {
     @State private var isLoading = true
     @State private var searchText = ""
     @State private var selectedType: ItemType = .liquidOrPowder
-    @State private var emptyNameAlert = ""
-    @State private var emptyQuantityAlert = ""
     @State private var showAlert = false
     @State private var alertMessage = ""
     
@@ -144,7 +142,6 @@ struct AddItemView: View {
                         }
                     }
                 }
-                    
                 .sheet(isPresented: $isProfileSheetPresented) {
                     Image(systemName: "person.crop.circle.fill")
                         .font(.system(size: 100))

@@ -15,6 +15,8 @@ struct AddOrderView: View {
     @State private var isLoading = true
     @State private var isLoadingTwo = true
     @State private var isAddingNewCategory = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
         if isLoading {
@@ -114,17 +116,29 @@ struct AddOrderView: View {
                                     }
                                 }
                                 ItemDetailsView(itemsArrayCopy: $itemsArrayCopy)
+                                
                                 Button("Add Product") {
-                                    Task {
-                                        do {
-                                            let finalCategory = isAddingNewCategory ? category : selectedCategory
-                                            self.user = try await viewModel.addProduct(user: self.user!, orderName: orderName, category: finalCategory, itemsArrayCopy: itemsArrayCopy)
-                                            productArray = user!.productList
-                                        } catch {
-                                            print(error)
+                                    if orderName.isEmpty {
+                                        alertMessage = "Order Name cannot be Empty!"
+                                        showAlert = true
+                                    } else if isAddingNewCategory && category.isEmpty {
+                                        alertMessage = "Please enter the new category name!"
+                                        showAlert = true
+                                    } else if !isAddingNewCategory && selectedCategory.isEmpty {
+                                        alertMessage = "Please select a category!"
+                                        showAlert = true
+                                    } else {
+                                        Task {
+                                            do {
+                                                let finalCategory = isAddingNewCategory ? category : selectedCategory
+                                                self.user = try await viewModel.addProduct(user: self.user!, orderName: orderName, category: finalCategory, itemsArrayCopy: itemsArrayCopy)
+                                                productArray = user!.productList
+                                            } catch {
+                                                print(error)
+                                            }
                                         }
+                                        isAddItemSheetPresented.toggle()
                                     }
-                                    isAddItemSheetPresented.toggle()
                                 }
                                 .foregroundColor(.red)
                                 .navigationTitle("Add New Product")
@@ -136,9 +150,18 @@ struct AddOrderView: View {
                                         .foregroundColor(.red)
                                     }
                                 }
+                                .alert(isPresented: $showAlert) {
+                                    Alert(title: Text("Input Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                                }
                             }
                         }
                     }
+                }
+                .sheet(isPresented: $isProfileSheetPresented) {
+                    Image(systemName: "person.crop.circle.fill")
+                        .font(.system(size: 100))
+                    
+                    ProfileView()
                 }
             }
             .task {

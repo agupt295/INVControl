@@ -121,6 +121,12 @@ struct InventoryStatusView: View {
                         }
                     }
                 }
+                .sheet(isPresented: $isProfileSheetPresented) {
+                    Image(systemName: "person.crop.circle.fill")
+                        .font(.system(size: 100))
+                    
+                    ProfileView()
+                }
             }
             .task {
                 do {
