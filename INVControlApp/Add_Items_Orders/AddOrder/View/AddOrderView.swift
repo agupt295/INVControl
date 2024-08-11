@@ -214,6 +214,38 @@ struct SolidsInputView: View {
     }
 }
 
+//struct LiquidOrPowderInputView: View {
+//    @Binding var quantity: Double
+//    @State private var showTextField = false
+//    @State private var quantityString: String = ""
+//
+//    var body: some View {
+//        VStack {
+//            Button(action: {
+//                showTextField.toggle()
+//                if showTextField {
+//                    quantityString = String(quantity)
+//                }
+//            }) {
+//                Text(showTextField ? "Hide Input" : "Enter Quantity")
+//                    .foregroundColor(.blue)
+//            }
+//            
+//            if showTextField {
+//                TextField("Enter quantity in mL/gm", text: $quantityString)
+//                    .keyboardType(.decimalPad)
+//                    .textFieldStyle(RoundedBorderTextFieldStyle())
+//                    .padding(.top, 10)
+//                    .onChange(of: quantityString) { newValue in
+//                        if let doubleValue = Double(newValue) {
+//                            quantity = doubleValue
+//                        }
+//                    }
+//            }
+//        }
+//    }
+//}
+
 struct LiquidOrPowderInputView: View {
     @Binding var quantity: Double
     @State private var showTextField = false
@@ -221,14 +253,14 @@ struct LiquidOrPowderInputView: View {
 
     var body: some View {
         VStack {
-            Button(action: {
-                showTextField.toggle()
-                if showTextField {
+            if !showTextField {
+                Button(action: {
+                    showTextField = true
                     quantityString = String(quantity)
+                }) {
+                    Text("Enter Quantity")
+                        .foregroundColor(.blue)
                 }
-            }) {
-                Text(showTextField ? "Hide Input" : "Enter Quantity")
-                    .foregroundColor(.blue)
             }
             
             if showTextField {
@@ -245,6 +277,7 @@ struct LiquidOrPowderInputView: View {
         }
     }
 }
+
 
 
 struct ExpandableRow<Content: View>: View {
