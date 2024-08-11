@@ -12,6 +12,10 @@ struct AddItemView: View {
     @State private var isLoading = true
     @State private var searchText = ""
     @State private var selectedType: ItemType = .liquidOrPowder
+    @State private var emptyNameAlert = ""
+    @State private var emptyQuantityAlert = ""
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     
     var filteredItems: [Item] {
         if searchText.isEmpty {
@@ -101,23 +105,28 @@ struct AddItemView: View {
                                     }
                                 }
                             }
-                            
                             Button("Add sub-unit") {
-                                Task {
-                                    do {
-                                        if let quantity = Double(newItemQuantity) {
-                                            if newItemName.isEmpty { newItemName = "New Item" }
+                                if newItemName.isEmpty {
+                                    alertMessage = "Item Name cannot be empty!"
+                                    showAlert = true
+                                } else if newItemQuantity.isEmpty {
+                                    alertMessage = "Quantity cannot be empty!"
+                                    showAlert = true
+                                } else if let quantity = Double(newItemQuantity) {
+                                    Task {
+                                        do {
                                             self.user = try await viewModel.addItem(user: self.user!, newItemName: newItemName, newItemQuantity: quantity, itemType: selectedType)
                                             newItemName = ""
                                             newItemQuantity = ""
-                                        } else {
-                                            print("Invalid quantity entered")
+                                        } catch {
+                                            print(error)
                                         }
-                                    } catch {
-                                        print(error)
                                     }
+                                    isAddItemSheetPresented.toggle()
+                                } else {
+                                    alertMessage = "Invalid quantity entered."
+                                    showAlert = true
                                 }
-                                isAddItemSheetPresented.toggle()
                             }
                             .foregroundColor(.red)
                         }
@@ -129,6 +138,9 @@ struct AddItemView: View {
                                 }
                                 .foregroundColor(.red)
                             }
+                        }
+                        .alert(isPresented: $showAlert) {
+                            Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                         }
                     }
                 }
